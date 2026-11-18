@@ -1103,10 +1103,10 @@ async function startGame(){if(!U||!NETOK)return;const nm=cln(q$('#nm').value,14)
 /* ---- pemain online (tanpa bot) ---- */
 function netPresence(){if(!db||!U)return;pRef=db.ref('players/'+U.uid);pRef.onDisconnect().remove();lastS='';netTick()}
 function netJoin(){inG=true;booted=0;if(DEMO)return;netPresence();netBest();const pr=db.ref('players');
- pr.on('child_added',upd);pr.on('child_changed',upd);
+ pr.on('child_added',netUpd);pr.on('child_changed',netUpd);
  pr.on('child_removed',s=>{const i=bots.findIndex(b=>b.uid==s.key);if(i>=0){const n=bots[i].n;bots.splice(i,1);if(booted)toast(n+' keluar',1800);ui()}});
  setTimeout(()=>booted=1,1500)}
-function upd(s){const u=s.key,v=s.val();if(!v||!U||u==U.uid)return;let b=bots.find(x=>x.uid==u);
+function netUpd(s){const u=s.key,v=s.val();if(!v||!U||u==U.uid)return;let b=bots.find(x=>x.uid==u);
  if(!b){b={uid:u,x:v.x,y:v.y,nx:v.x,ny:v.y,mt:0};bots.push(b);if(booted)toast((v.n||'Pemain')+' bergabung',1800);ui()}
  b.n=cln(v.n)||'?';b.lv=v.lv|0;b.h=v.h||'#e8742a';b.sk=v.sk|0;b.rod=v.rod|0;b.nx=v.x;b.ny=v.y;b.d=v.d|0;b.bob=v.bob||null;
  if(v.mid&&v.mid!==b.mid){b.mid=v.mid;if(booted){b.msg=cln(v.msg,60);b.mt=4}}
