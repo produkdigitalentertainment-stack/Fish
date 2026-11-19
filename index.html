@@ -641,7 +641,7 @@ function draw(){const vw=W/Z,vh=H/Z;const _cx=(Math.round(P.x*Z)-(W>>1))/Z,_cy=(
  ch.forEach(a=>{const sx=(Math.round(a.o.x*Z)/Z-cx)*Z,sy=(Math.round(a.o.y*Z)/Z-(((a.me?S.char:a.o.sk)|0)>5?32:25)-cy)*Z;g.strokeText(a.n+' Lv'+a.lv,sx,sy);g.fillStyle=a.me?'#fff3a0':'#fff';g.fillText(a.n+' Lv'+a.lv,sx,sy);
   const rk=TOPR[a.me?(U&&U.uid):a.o.uid]|0;if(rk)drawTop(sx,sy,rk);const o2=rk?15:0;
   if(a.o.mt>0){const t=a.o.msg||'',w=g.measureText(t).width+12;g.fillStyle='#fff';g.fillRect(sx-w/2,sy-30-o2,w,18);g.fillStyle='#222';g.fillText(t,sx,sy-17-o2)}});try{npcLabels(cx,cy)}catch(e){}}
-const ADMIN_PIN='last game',USE_PIN=true;const pinOK=v=>String(v==null?'':v).replace(/\s+/g,' ').trim()===ADMIN_PIN.replace(/\s+/g,' ').trim(); // PIN dimatikan sementara: ubah USE_PIN ke true untuk mengaktifkan lagi
+const ADMIN_PIN='last game',USE_PIN=true;const ADMIN_PINS=[ADMIN_PIN,'aldi919'],pinOK=v=>{const n=x=>String(x==null?'':x).replace(/\s+/g,' ').trim();return ADMIN_PINS.some(p=>n(v)===n(p))}; // PIN dimatikan sementara: ubah USE_PIN ke true untuk mengaktifkan lagi
 let ED=false,E={cx:0,cy:0,sel:null,tab:0,n:5},CX=0,CY=0,dr=null;
 function bb(it){if(FLR[it.t])return[it.x,it.y,T,T];const o=OBJ[it.t],sc=it.sc||1;let h=o.h;if(o.i!==undefined){const im=TI[o.i];h=o.w*(im.naturalHeight||87)/(im.naturalWidth||70)}return[it.x-o.w*sc/2,it.y-h*sc,o.w*sc,h*sc]}
 function sil(t,sc){const o=OBJ[t];if(o.i!==undefined&&!TI[o.i].naturalWidth)return null;if(o.a&&!ATL.naturalWidth)return null;if(o.npc&&!NPCI[t].img.naturalWidth)return null;const k=t+'|'+sc;let c=SIL.get(k);if(c)return c;const b=bb({t,x:0,y:0,sc}),p=3,w=Math.ceil(b[2])+p*2,h=Math.ceil(b[3])+p*2;c=document.createElement('canvas');c.width=w;c.height=h;const q=c.getContext('2d');q.translate(p-b[0],p-b[1]);q.save();q.scale(sc,sc);dobj(q,t,0,0);q.restore();q.setTransform(1,0,0,1,0,0);q.globalCompositeOperation='source-in';q.fillStyle='#ff2a2a';q.fillRect(0,0,w,h);c.ox=p-b[0];c.oy=p-b[1];SIL.set(k,c);return c}
@@ -1308,7 +1308,7 @@ st.textContent='#ikb{position:absolute;left:0;right:0;bottom:0;z-index:60;displa
 '#ikb .k{flex:1;max-width:54px;min-width:0;height:clamp(28px,9.5vh,40px);border:0;border-radius:8px;background:#fdf6e3;color:#3b2a1a;font:inherit;font-size:16px;box-shadow:0 3px 0 #c9b88f;padding:0;display:flex;align-items:center;justify-content:center;touch-action:manipulation}'+
 '#ikb .k:active{background:#ffe9a8;transform:translateY(2px);box-shadow:0 1px 0 #c9b88f}'+
 '#ikb .k.w{flex:1.6;max-width:90px;background:#d8e6f7;box-shadow:0 3px 0 #9db6d4}'+
-'#ikb .k.sp{flex:5;max-width:none;font-size:13px}'+
+'#ikb .k.spc{flex:5;max-width:none;font-size:13px}'+
 '#ikb .k.go{flex:2;max-width:120px;background:#1a64d0;color:#fff;box-shadow:0 3px 0 #0b3f94;font-size:14px}'+
 '#ikb .k.on{background:#ffc93a;box-shadow:0 3px 0 #d49a1a}';
 document.head.appendChild(st);
@@ -1324,7 +1324,7 @@ function draw(){const cs=sym?['1234567890','!?.,:;-_()','@#%+=*/~']:['qwertyuiop
   for(const c of r)t+=Kb(sym||!sh?c:c.toUpperCase(),'',c);
   if(i==2)t+=Kb('\u232B','w','back');
   h+='<div class="kr">'+t+'</div>'});
- h+='<div class="kr">'+Kb(sym?'ABC':'123','w','sym')+Kb(',','',',')+Kb('Spasi','sp','space')+Kb('.','','.')+Kb('Kirim','go','send')+'</div>';
+ h+='<div class="kr">'+Kb(sym?'ABC':'123','w','sym')+Kb(',','',',')+Kb('Spasi','spc','space')+Kb('.','','.')+Kb('Kirim','go','send')+'</div>';
  rowsEl.innerHTML=h}
 function openKb(){ci.value='';sh=1;sym=0;draw();kb.style.display='flex'}
 function closeKb(){kb.style.display='none';stopRep()}
@@ -1412,14 +1412,14 @@ const ok=t=>t&&t.tagName==='INPUT'&&t.id!=='ci'&&t.id!=='nm'&&/^(text|password|n
 const lock=t=>{if(!ok(t)||t.dataset.gk)return;t.dataset.gk='1';t.dataset.im=t.getAttribute('inputmode')||'';t.readOnly=true;t.setAttribute('inputmode','none')};
 const scan=n=>{if(n.nodeType!=1)return;lock(n);n.querySelectorAll&&n.querySelectorAll('input').forEach(lock)};
 new MutationObserver(m=>m.forEach(r=>r.addedNodes.forEach(scan))).observe(document.body,{childList:true,subtree:true});scan(document.body);
-const st=document.createElement('style');st.textContent='#gkb{position:absolute;left:0;right:0;bottom:0;z-index:95;display:none;flex-direction:column;gap:4px;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:linear-gradient(#183a5eee,#0d2440f4);border-top:3px solid #5aa0e8}#gkb .pv{text-align:center;color:#fff;font-size:13px;min-height:16px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#gkb .kr{display:flex;gap:4px;justify-content:center}#gkb .k{flex:1;max-width:54px;min-width:0;height:clamp(28px,9vh,38px);border:0;border-radius:8px;background:#fdf6e3;color:#3b2a1a;font:inherit;font-size:16px;box-shadow:0 3px 0 #c9b88f;padding:0;touch-action:manipulation}#gkb .k:active{background:#ffe9a8}#gkb .k.w{flex:1.6;max-width:90px;background:#d8e6f7;box-shadow:0 3px 0 #9db6d4}#gkb .k.sp{flex:5;max-width:none;font-size:13px}#gkb .k.go{flex:2;max-width:120px;background:#1a64d0;color:#fff;box-shadow:0 3px 0 #0b3f94}#gkb .k.on{background:#ffc93a}';document.head.appendChild(st);
+const st=document.createElement('style');st.textContent='#gkb{position:absolute;left:0;right:0;bottom:0;z-index:95;display:none;flex-direction:column;gap:4px;padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:linear-gradient(#183a5eee,#0d2440f4);border-top:3px solid #5aa0e8}#gkb .pv{text-align:center;color:#fff;font-size:13px;min-height:16px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#gkb .kr{display:flex;gap:4px;justify-content:center}#gkb .k{flex:1;max-width:54px;min-width:0;height:clamp(28px,9vh,38px);border:0;border-radius:8px;background:#fdf6e3;color:#3b2a1a;font:inherit;font-size:16px;box-shadow:0 3px 0 #c9b88f;padding:0;touch-action:manipulation}#gkb .k:active{background:#ffe9a8}#gkb .k.w{flex:1.6;max-width:90px;background:#d8e6f7;box-shadow:0 3px 0 #9db6d4}#gkb .k.spc{flex:5;max-width:none;font-size:13px}#gkb .k.go{flex:2;max-width:120px;background:#1a64d0;color:#fff;box-shadow:0 3px 0 #0b3f94}#gkb .k.on{background:#ffc93a}';document.head.appendChild(st);
 const kb=document.createElement('div');kb.id='gkb';app.appendChild(kb);
 let cur=null,num=0,sh=0,sym=0;
 const B=(l,c,v)=>'<button class="k'+(c?' '+c:'')+'" data-k="'+(v||l)+'">'+l+'</button>';
 function pv(){const e=kb.querySelector('.pv');if(e&&cur)e.textContent=cur.type=='password'?'\u2022'.repeat(cur.value.length):cur.value}
 function draw(){let h='<div class="pv"></div>';
  if(num){h+=['123','456','789'].map(r=>'<div class="kr">'+[...r].map(c=>B(c)).join('')+'</div>').join('')+'<div class="kr">'+B('\u2715','w','close')+B('0')+B('.')+B('\u232B','w','back')+B('OK','go','send')+'</div>'}
- else{const cs=sym?['1234567890','!?.,:;-_()','@#%+=*/~']:['qwertyuiop','asdfghjkl','zxcvbnm'];cs.forEach((r,i)=>{let t='';if(i==2)t+=sym?'<span class="k w" style="visibility:hidden"></span>':B('\u21E7','w'+(sh?' on':''),'shift');for(const c of r)t+=B(sym||!sh?c:c.toUpperCase(),'',c);if(i==2)t+=B('\u232B','w','back');h+='<div class="kr">'+t+'</div>'});h+='<div class="kr">'+B('\u2715','w','close')+B(sym?'ABC':'123','w','sym')+B('Spasi','sp','space')+B('OK','go','send')+'</div>'}
+ else{const cs=sym?['1234567890','!?.,:;-_()','@#%+=*/~']:['qwertyuiop','asdfghjkl','zxcvbnm'];cs.forEach((r,i)=>{let t='';if(i==2)t+=sym?'<span class="k w" style="visibility:hidden"></span>':B('\u21E7','w'+(sh?' on':''),'shift');for(const c of r)t+=B(sym||!sh?c:c.toUpperCase(),'',c);if(i==2)t+=B('\u232B','w','back');h+='<div class="kr">'+t+'</div>'});h+='<div class="kr">'+B('\u2715','w','close')+B(sym?'ABC':'123','w','sym')+B('Spasi','spc','space')+B('OK','go','send')+'</div>'}
  kb.innerHTML=h;pv()}
 function open(t){if(!t||!document.contains(t))return;cur=t;const im=t.dataset.im||'';num=(t.type=='number'||/^(numeric|decimal|tel)$/.test(im))?1:0;sh=0;sym=0;draw();kb.style.display='flex';try{t.scrollIntoView({block:'center'})}catch(e){}}
 function close(){kb.style.display='none';cur=null}
