@@ -189,7 +189,7 @@ let SH=null,AVD=null,AIM=null;try{AVD=localStorage.getItem('fishits_av')}catch(e
 try{Object.assign(CFG,JSON.parse(localStorage.getItem('fishits_cfg')||'{}'))}catch(e){}
 const saveCfg=()=>{try{localStorage.setItem('fishits_cfg',JSON.stringify(CFG))}catch(e){}};
 function gfxRS(v){v=+v;return v>=2?Math.max(1.5,Math.min(2,window.devicePixelRatio||2)):v?1:.6}
-let RS=gfxRS(CFG.gfx),RSl=0,JE=false,HZ=60;
+let AGD=0,RS=gfxRS(CFG.gfx),RSl=0,JE=false,HZ=60;
 const vib=n=>{if(CFG.vib)try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 let AC=null,MST=0;
 function audio(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}if(AC.state=='suspended'){try{AC.resume()}catch(e){}}return AC}
@@ -631,12 +631,13 @@ function draw(){const vw=W/Z,vh=H/Z;const _cx=(Math.round(P.x*Z)-(W>>1))/Z,_cy=(
  else{g.drawImage(mc,0,0);IT.forEach(it=>{if(FLR[it.t])dflr(g,it.t,it.x,it.y)});shore.forEach(s=>{if(fo.has(s[0]+','+s[1]))return;const o=Math.sin(tt*2+s[0]+s[1])*2;rc('rgba(255,255,255,.55)',s[0]*T+8+o,s[1]*T+5,5,1)})}
  const fl=(o,f)=>{if(f&&f.bx!==undefined||f&&f.length){const bx=f.bx!==undefined?f.bx:f[0],by=f.by!==undefined?f.by:f[1],bw=Math.sin(tt*5)*1;g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=.6;g.beginPath();g.moveTo(o.x+6,o.y-14);g.lineTo(bx,by+bw);g.stroke();rc('#e8e8e8',bx-1,by+bw-2,2,2);rc('#e04a3a',bx-1,by+bw,2,2)}};
  const ch=ED?[]:[{o:P,h:'#e8742a',n:S.name,lv:S.lv,f:F.s?F:null,me:1}].concat(bots.map(b=>({o:b,h:b.h,n:b.n,lv:b.lv,f:b.bob?{bx:b.bob[0],by:b.bob[1]}:null})));
+ const drawChar=a=>{const f=a.f,hb=f&&f.bx!==undefined,dx=hb?f.bx-a.o.x:0,dy=hb?f.by-a.o.y:0,dd=hb?(Math.abs(dx)>Math.abs(dy)?(dx<0?1:3):(dy<0?2:0)):(a.o.d||0),ox=Math.round(a.o.x),oy=Math.round(a.o.y),ri=a.me?(S.rod|0):(a.o.rod|0),sk2=a.me?S.char:(a.o.sk||0),ph=Math.floor(tt*8)+(a.me?0:(a.o.lv|0)),fr2=c2fr(a.o.mv,ph),mm=hb?(f.bx<ox?-1:1):(dd==1?-1:1),hp=sk2>5?hand2(sk2,dd,fr2,mm):null,rp=(a.me&&S.rodOff&&F.s==0)?null:rodPose(ox,oy,dd,hb?f.bx:null,ri,a.me&&F.s==3,hp);g.save();g.translate(Math.round(a.o.x*Z)/Z-ox,Math.round(a.o.y*Z)/Z-oy);if(rp&&dd==2)drawRod(rp);else if(!rp&&a.f)fl(a.o,a.f);chr(ox,oy,a.h,dd,sk2,a.o.mv,ph);if(rp&&dd!=2){drawRod(rp);if(hp)drawFist(ox,oy,sk2,dd,fr2,hp)}if(hb&&rp)lineBob(rp.tx,rp.ty,f.bx,f.by,a.me?(S.flt|0):(a.o.fl|0),a.me&&F.s==2);g.restore()};
  const uo=cnt(SF,cy,vh)+cnt(SO,cy,vh)>900&&Z<1.6;
- if(uo){if(OLD||!OL){bakeOL();OLD=0}g.imageSmoothingEnabled=true;g.drawImage(OL,0,0,MW*T,MH*T);if(OLX)drawIt(g,OLX)}
+ if(uo){if(OLD||!OL){bakeOL();OLD=0}g.imageSmoothingEnabled=true;g.drawImage(OL,0,0,MW*T,MH*T);if(OLX)drawIt(g,OLX);ch.slice().sort((p,q)=>p.o.y-q.o.y).forEach(drawChar);drawAim();drawShow()}
  else{const fv=[],ov=[];vis(SF,cx,cy,vw,vh,fv);vis(SO,cx,cy,vw,vh,ov);
  g.fillStyle='rgba(0,0,0,.18)';g.beginPath();ov.forEach(a=>{const t=a.o,o=OBJ[t.t];if(false&&o.s&&!o.a&&!o.sys){const sc=t.sc||1,rx=o.w*.3*sc;g.moveTo(t.x+rx,t.y-1);g.ellipse(t.x,t.y-1,rx,3*Math.min(sc,2),0,0,7)}});g.fill();trShadow(g,ov.map(a=>a.o));
  g.imageSmoothingEnabled=true;
- const zs=(a,b)=>(a.t?LZ(a.t):1)-(b.t?LZ(b.t):1)||a.o.y-b.o.y;fv.sort(zs).concat(ov.concat(ch).sort(zs)).forEach(a=>{if(a.t)drawIt(g,a.t);else{const f=a.f,hb=f&&f.bx!==undefined,dx=hb?f.bx-a.o.x:0,dy=hb?f.by-a.o.y:0,dd=hb?(Math.abs(dx)>Math.abs(dy)?(dx<0?1:3):(dy<0?2:0)):(a.o.d||0),ox=Math.round(a.o.x),oy=Math.round(a.o.y),ri=a.me?(S.rod|0):(a.o.rod|0),sk2=a.me?S.char:(a.o.sk||0),ph=Math.floor(tt*8)+(a.me?0:(a.o.lv|0)),fr2=c2fr(a.o.mv,ph),mm=hb?(f.bx<ox?-1:1):(dd==1?-1:1),hp=sk2>5?hand2(sk2,dd,fr2,mm):null,rp=(a.me&&S.rodOff&&F.s==0)?null:rodPose(ox,oy,dd,hb?f.bx:null,ri,a.me&&F.s==3,hp);g.save();g.translate(Math.round(a.o.x*Z)/Z-ox,Math.round(a.o.y*Z)/Z-oy);if(rp&&dd==2)drawRod(rp);else if(!rp&&a.f)fl(a.o,a.f);chr(ox,oy,a.h,dd,sk2,a.o.mv,ph);if(rp&&dd!=2){drawRod(rp);if(hp)drawFist(ox,oy,sk2,dd,fr2,hp)}if(hb&&rp)lineBob(rp.tx,rp.ty,f.bx,f.by,a.me?(S.flt|0):(a.o.fl|0),a.me&&F.s==2);g.restore()}});drawAim();drawShow()}
+ const zs=(a,b)=>(a.t?LZ(a.t):1)-(b.t?LZ(b.t):1)||a.o.y-b.o.y;fv.sort(zs).concat(ov.concat(ch).sort(zs)).forEach(a=>{if(a.t)drawIt(g,a.t);else drawChar(a)});drawAim();drawShow()}
  try{drawShade(cx,cy,vw,vh)}catch(e){}
  g.imageSmoothingEnabled=false;
  if(ED){g.lineWidth=1.2;g.strokeStyle='#ff2a2a';FLI.forEach(it=>{if(it.lk&&it.x>cx-T&&it.x<cx+vw&&it.y>cy-T&&it.y<cy+vh)g.strokeRect(it.x+.6,it.y+.6,T-1.2,T-1.2)});if(E.hb){g.fillStyle='rgba(255,60,60,.3)';IT.forEach(i=>{if(i.x<cx-80||i.x>cx+vw+80||i.y<cy-40||i.y>cy+vh+140)return;const q=shp(i);if(q&&!OBJ[i.t].fz)fsh(g,q)})}const it=E.sel;if(it){const b=bb(it),q=shp(it);if(q){g.fillStyle='rgba(60,140,255,.38)';fsh(g,q)}g.strokeStyle='#ffe040';g.lineWidth=1;g.save();if(it.r){const px=b[0]+b[2]/2,py=b[1]+b[3]/2;g.translate(px,py);g.rotate(it.r*Math.PI/180);g.translate(-px,-py)}g.strokeRect(b[0],b[1],b[2],b[3]);g.restore()}}
@@ -875,7 +876,7 @@ function closeSet(){$('#st').style.display='none'}
 $('#bs').onclick=openSet;
 $('#st').addEventListener('click',e=>{const x=e.target.closest('[data-s]');if(!x)return;const k=x.dataset.s,v=x.dataset.v;
  if(k=='x')return closeSet();
- if(k=='gfx'){CFG.gfx=+v;RS=gfxRS(CFG.gfx);rs()}
+ if(k=='gfx'){CFG.gfx=+v;AGD=0;RS=gfxRS(CFG.gfx);rs()}
  else if(k=='vhl'){CFG.vhl=CFG.vhl?0:1;toast(CFG.vhl?'Tinggi layar dikunci':'Kunci tinggi layar dibuka',1500)}
  else if(k=='vhp'){if(CFG.vhl)return toast('Tinggi layar terkunci, matikan kuncinya dulu',1800);CFG.vh=+v;rs()}
  else if(k=='fps')CFG.fps=+v;
@@ -915,7 +916,7 @@ const AVK='fishits_av';
 function avHtml(){return '<div class="av"'+(AVD?' style="background-image:url('+AVD+')"':'')+'>'+(AVD?'':sv('<circle cx="9" cy="6.5" r="3.2" fill="#9a8a6a"/><path d="M3 16c0-4 3-5.5 6-5.5s6 1.5 6 5.5z" fill="#9a8a6a"/>'))+'</div>'}
 function avSmall(c,nm){return AVD&&!c?'<span class="av" style="width:30px;height:30px;background-image:url('+AVD+')"></span>':'<span class="av" style="width:30px;height:30px;background:'+(c||'#c8d8f0')+';color:#fff;font-size:13px;cursor:default">'+(nm?nm.charAt(0).toUpperCase():'')+'</span>'}
 $('#me').addEventListener('click',e=>{if(e.target.closest('.av'))$('#avf').click()});
-$('#avf').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=96;const q=c.getContext('2d'),s=Math.min(im.naturalWidth,im.naturalHeight),sx=(im.naturalWidth-s)/2,sy=(im.naturalHeight-s)/2;q.drawImage(im,sx,sy,s,s,0,0,96,96);AVD=c.toDataURL('image/jpeg',.72);try{localStorage.setItem(AVK,AVD)}catch(_){}ui();try{avUp()}catch(_){}toast('Foto profil diganti')}catch(_){toast('Foto gagal dipakai')}URL.revokeObjectURL(u)};im.onerror=()=>{URL.revokeObjectURL(u);toast('Foto gagal dibuka')};im.src=u;e.target.value=''};
+$('#avf').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=96;const q=c.getContext('2d'),s=Math.min(im.naturalWidth,im.naturalHeight),sx=(im.naturalWidth-s)/2,sy=(im.naturalHeight-s)/2;q.drawImage(im,sx,sy,s,s,0,0,96,96);AVD=c.toDataURL('image/jpeg',.72);try{localStorage.setItem(AVK,AVD)}catch(_){}ui();try{avUp(1)}catch(_){}toast('Foto profil diganti')}catch(_){toast('Foto gagal dipakai')}URL.revokeObjectURL(u)};im.onerror=()=>{URL.revokeObjectURL(u);toast('Foto gagal dibuka')};im.src=u;e.target.value=''};
 
 function trackBest(f){setTimeout(()=>{try{netBest()}catch(e){}},0);if(!S.bw||f.w>S.bw.w)S.bw={n:f.n,w:f.w,v:f.v,r:f.r};if(!S.bv||f.v>S.bv.v)S.bv={n:f.n,w:f.w,v:f.v,r:f.r}}
 function toggleShow(f){SH=SH===f?null:f;if(SH)toast('Pamer '+f.n+' '+fmtW(f.w));ui()}
@@ -963,7 +964,7 @@ function rkRender(){const e=rkBoard(RK.sc),k=RK.tb,kk=k=='w'?'w':k=='v'?'v':'rc'
   sb=(t,l,i3)=>'<button class="mk" data-t="'+t+'" style="border-radius:16px;box-shadow:none;background:'+(k==t?'#fdf6e3':'none')+';color:'+(k==t?(t=='r'?'#188a40':'#1a64d0'):'#fff')+'">'+(i3||'')+l+'</button>',
   seg='<div style="margin-left:auto;display:flex;background:#0b3f94;border-radius:20px;padding:3px">'+sb('w','Terberat')+sb('v','Termahal')+sb('r','Terkaya',GI)+'</div>';
  $('#rk').innerHTML='<div class="bh"><div class="bic">'+ic.rank+'</div><span>Papan Peringkat</span>'+seg+'<button class="bx" data-x="1" style="margin-left:6px">'+XI+'</button></div><div class="rkb"><div class="sd">'+sdb('all','Server Fish land',sv('<circle cx="9" cy="9" r="6" fill="#3a9ae8"/><path d="M5 7c2-2 4 0 5-1s2 2 1 3-3 0-3 2-2 1-3-1z" fill="#6cb43c"/>'))+'<div class="rs" id="rkt">'+''+'</div></div><div class="rl"><div class="rlist">'+rows+'</div>'+mine+ttl+'</div></div>';rkTick()}
-function rkTick(){const t=$('#rkt');if(!t||typeof LBC=='undefined')return;if(LBERR||LBWERR){t.textContent=(LBERR?'Gagal muat ranking: '+LBERR:'')+(LBERR&&LBWERR?' | ':'')+(LBWERR?'Rekor belum terkirim: '+LBWERR:'');return}let s=Math.max(0,Math.floor((LBC.ts+60000-Date.now())/1000));const p=x=>String(x).padStart(2,'0');t.textContent='Refresh otomatis '+p(s/60|0)+':'+p(s%60)}
+function rkTick(){const t=$('#rkt');if(!t||typeof LBC=='undefined')return;if(LBERR||LBWERR){t.textContent=(LBERR?'Gagal muat ranking: '+LBERR:'')+(LBERR&&LBWERR?' | ':'')+(LBWERR?'Rekor belum terkirim: '+LBWERR:'');return}let s=Math.max(0,Math.floor((LBC.ts+60000-Date.now())/1000));const p=x=>String(x).padStart(2,'0');t.textContent='Refresh otomatis '+p(s/60|0)+':'+p(s%60)+(AVERR?' | Foto profil belum terkirim: '+AVERR:'')}
 setInterval(()=>{if($('#rk').style.display=='flex')rkTick()},1000);
 function openRk(){closeP();closeBag();closeSet();closeEq();rkRender();$('#rk').style.display='flex';try{netBest();if(Date.now()-LBC.ts>15000)lbFetch()}catch(e){}}
 $('#br').onclick=()=>{if($('#rk').style.display=='flex')$('#rk').style.display='none';else openRk()};
@@ -1480,10 +1481,10 @@ badge();setInterval(badge,1500);
 </script>
 <script>(function(){const done=()=>{try{ui();if(document.getElementById('bag').style.display=='flex')renderBag()}catch(e){}};let left=0;['fi','nw','ik','sx'].forEach(k=>{const im=SPX[k],d=SPD[k];if(!im)return;left++;const go=()=>{try{const f=im.naturalWidth/d[2],cw=d[0]*f,ch=d[1]*f,cv=document.createElement('canvas');cv.width=im.naturalWidth;cv.height=im.naturalHeight;const g=cv.getContext('2d');g.drawImage(im,0,0);const cols=Math.round(d[2]/d[0]),rows=Math.round(d[3]/d[1]);for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const x0=Math.round(c*cw),y0=Math.round(r*ch),w=Math.round(cw),h=Math.round(ch),px=g.getImageData(x0,y0,w,h).data;let a=w,b=h,e=-1,t=-1;for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(px[(y*w+x)*4+3]>24){if(x<a)a=x;if(x>e)e=x;if(y<b)b=y;if(y>t)t=y}if(e>=0)OFF[k+c+'_'+r]=[(w/2-(a+e+1)/2)/f,(h/2-(b+t+1)/2)/f]}}catch(x){}if(--left==0)done()};if(im.complete&&im.naturalWidth)go();else im.addEventListener('load',go)})})()</script><script>
 /* ===== foto profil di leaderboard ===== */
-const AVC={};let avUpKey='',avUpT=0,avRT=0;
-function avUp(){try{if(!db||!U||!AVD||avUpKey===AVD||Date.now()-avUpT<60000)return;avUpT=Date.now();const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=64;c.getContext('2d').drawImage(im,0,0,64,64);const d=c.toDataURL('image/jpeg',.7),k=AVD;db.ref('avatars/'+U.uid).set(d).then(()=>{avUpKey=k}).catch(e=>console.error('foto profil ditolak (cek Rules avatars):',e&&e.code))}catch(e){}};im.src=AVD}catch(e){}}
-function avQ(u){if(!db||!u)return;const c=AVC[u];if(c&&(c.l||Date.now()-c.t<300000))return;AVC[u]={d:c?c.d:'',t:Date.now(),l:1};db.ref('avatars/'+u).once('value').then(v=>{AVC[u]={d:typeof v.val()=='string'?v.val():'',t:Date.now()}}).catch(()=>{AVC[u]={d:c?c.d:'',t:Date.now()}}).then(()=>{clearTimeout(avRT);avRT=setTimeout(()=>{try{if(document.getElementById('rk').style.display=='flex')rkRender()}catch(e){}},250)})}
-function avUser(x){const own=U&&x.fu===U.uid,d=own?AVD:(AVC[x.fu]&&AVC[x.fu].d);if(!own)avQ(x.fu);return d&&/^data:image\//.test(d)?'<span class="av" style="width:30px;height:30px;background-image:url('+d+')"></span>':avSmall(x.c,x.n)}
+const AVC={};let avUpKey='',avUpT=0,avRT=0,AVERR='',AVWARN=0;
+function avUp(force){try{if(!db||!U||!AVD||avUpKey===AVD||(!force&&Date.now()-avUpT<60000))return;avUpT=Date.now();const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=64;c.getContext('2d').drawImage(im,0,0,64,64);const d=c.toDataURL('image/jpeg',.7),k=AVD;db.ref('avatars/'+U.uid).set(d).then(()=>{avUpKey=k;AVERR=''}).catch(e=>{AVERR=(e&&e.code)||'error';console.error('foto profil ditolak (cek Rules avatars):',AVERR);if(!AVWARN){AVWARN=1;try{toast('Foto profil belum terkirim ke pemain lain ('+AVERR+')',4500)}catch(_){}}})}catch(e){}};im.src=AVD}catch(e){}}
+function avQ(u){if(!db||!u)return;const c=AVC[u];if(c&&(c.l||Date.now()-c.t<300000))return;AVC[u]={d:c?c.d:'',t:Date.now(),l:1};db.ref('avatars/'+u).once('value').then(v=>{{const dv=typeof v.val()=='string'?v.val():'';AVC[u]={d:dv,t:Date.now()-(dv?0:240000)}}}).catch(()=>{AVC[u]={d:c?c.d:'',t:Date.now()}}).then(()=>{clearTimeout(avRT);avRT=setTimeout(()=>{try{if(document.getElementById('rk').style.display=='flex')rkRender()}catch(e){}},250)})}
+function avUser(x){const own=U&&x.fu===U.uid,d=own?AVD:(AVC[x.fu]&&AVC[x.fu].d);if(!own)avQ(x.fu);return d&&/^data:image\//.test(d)?'<span class="av" style="width:30px;height:30px;background-image:url('+d+')"></span>':avSmall(own?x.c:(x.c||'#c8d8f0'),x.n)}
 /* ===== keyboard dalam game untuk semua input admin (tanpa layar hitam) ===== */
 (()=>{const co=matchMedia('(pointer:coarse)').matches;
 if(co){try{const f=()=>{try{const r=document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen;if(!document.fullscreenElement&&r)r.call(document.documentElement)}catch(e){}try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}};addEventListener('pointerdown',f,{once:true,capture:true})}catch(e){}}
@@ -1531,20 +1532,26 @@ bag.addEventListener('click',e=>{if(performance.now()-lpAt<700){e.stopPropagatio
 /* ketuk biasa: hanya pindah tas <-> hotbar (tidak ada lagi kunci dobel-ketuk) */
 bagTap=function(k){const f=S.inv[k];if(!f)return;BMS='';if(f.hs!=null)delete f.hs;else{const h=freeHS();if(h!=null)f.hs=h;else BMS='Hotbar penuh'}bagFast(k);bagSaveSoon()};
 })();
-/* ===== anti-lag: kalau FPS terus rendah, turunkan grafis otomatis ===== */
+/* ===== anti-lag adaptif: grafis turun SEMENTARA saat lag, otomatis balik ke pilihan pemain saat sudah lancar ===== */
 (()=>{
-let n=0,t0=0,bad=0,lvl=0;
-function lower(){
- if(CFG.gfx>=2)CFG.gfx=1;else if(CFG.gfx==1)CFG.gfx=0;else if(CFG.fps>60)CFG.fps=60;else if(CFG.fps>30)CFG.fps=30;else return false;
- saveCfg();RS=gfxRS(CFG.gfx);rs();try{toast('Grafis diturunkan otomatis biar nggak lag (bisa diubah di Pengaturan)',3200)}catch(e){}return true}
+const GN=['Low','Medium','HD+'];
+let n=0,t0=0,bad=0,good=0,cool=0,rw=15000,lastUp=0;
+const eff=()=>Math.max(0,(+CFG.gfx||0)-AGD);
+function apply(msg){RS=gfxRS(eff());rs();try{toast(msg,3000)}catch(e){}}
 function f(t){requestAnimationFrame(f);
- if(!playing||document.hidden||ED||KB){t0=0;n=0;bad=0;return}
+ if(!playing||document.hidden||ED||KB){t0=0;n=0;bad=0;good=0;return}
  if(!t0){t0=t;n=0;return}
  n++;
- if(t-t0>=3000){const fps=n*1000/(t-t0),tg=Math.min(CFG.fps||60,HZ||60);n=0;t0=t;
-  if(fps<tg*.72)bad++;else bad=0;
-  if(bad>=2&&lvl<3){bad=0;lvl++;lower()}}}
+ if(t-t0<2000)return;
+ const fps=n*1000/(t-t0),tg=Math.min(CFG.fps||60,HZ||60);n=0;t0=t;
+ if(cool>0){cool--;return}
+ if(fps<tg*.72){good=0;bad++;
+  if(bad>=2&&AGD<(+CFG.gfx||0)){bad=0;if(Date.now()-lastUp<25000)rw=Math.min(120000,rw*2);AGD++;cool=1;apply('Lag terdeteksi, grafis turun sementara ke '+GN[eff()])}}
+ else{bad=0;
+  if(AGD>0){if(fps>=tg*.9){good+=2000;if(good>=rw){good=0;AGD--;lastUp=Date.now();cool=1;apply('Sudah lancar, grafis kembali ke '+GN[eff()])}}else good=0}
+  else if(rw>15000&&Date.now()-lastUp>60000)rw=15000}}
 requestAnimationFrame(f);
+window.__gfxAuto={get drop(){return AGD},get eff(){return eff()},tick:f};
 })();
 </script>
 <script>
