@@ -1225,6 +1225,7 @@ function netJoin(){inG=true;booted=0;if(DEMO)return;netPresence();netBest();cons
  pr.on('child_removed',s=>{const i=bots.findIndex(b=>b.uid==s.key);if(i>=0){const n=bots[i].n;bots.splice(i,1);if(booted)toast(n+' keluar',1800);ui()}});
  setTimeout(()=>booted=1,1500)}
 function netUpd(s){const u=s.key,v=s.val();if(!v||!U||u==U.uid)return;let b=bots.find(x=>x.uid==u);
+ if(!b&&!(isFinite(parseFloat(v.x))&&isFinite(parseFloat(v.y))&&v.x!==null&&v.y!==null))return;
  if(!b){b={uid:u,x:v.x,y:v.y,nx:v.x,ny:v.y,mt:0,buf:[],sp:0,dl:220};bots.push(b);if(booted)toast((v.n||'Pemain')+' bergabung',1800);ui()}
  b.n=cln(v.n)||'?';b.lv=v.lv|0;b.h=v.h||'#e8742a';b.sk=v.sk|0;b.rod=v.rod|0;b.fl=v.fl|0;b.stk=v.stk|0;b.nx=v.x;b.ny=v.y;b.d=v.d|0;b.bob=v.bob||null;botSample(b,v);
  if(typeof v.msg==='string'&&v.msg.slice(0,3)==='~F|'){const p=v.msg.split('|'),i=+p[1],w=+p[2];if(p[1]==='-')b.sh=null;else if(FISH[i]&&w>=1&&w<=FISH[i][4])b.sh={n:FISH[i][1],w:Math.round(w),r:FISH[i][0]};if(v.mid)b.mid=v.mid}
@@ -1262,6 +1263,7 @@ function botStep(dt){const r0=srvNow();
   if(B.length<2||rt<=a.t){tx=a.x;ty=a.y}
   else if(rt<=c.t){const f=(rt-a.t)/Math.max(1,c.t-a.t);tx=a.x+(c.x-a.x)*f;ty=a.y+(c.y-a.y)*f}
   else{const sp=c.t-a.t,ex=Math.min(rt-c.t,160);if(sp>0&&sp<300){tx=c.x+(c.x-a.x)/sp*ex;ty=c.y+(c.y-a.y)/sp*ex}else{tx=c.x;ty=c.y}}
+  if(!isFinite(b.x)||!isFinite(b.y)){if(isFinite(tx)&&isFinite(ty)){b.x=tx;b.y=ty;b.sp=0;b.mv=0}continue}
   const dx=tx-b.x,dy=ty-b.y;
   if(Math.hypot(dx,dy)>140){b.x=tx;b.y=ty;b.sp=0;b.mv=0;continue}
   const k=1-Math.exp(-dt*22);b.x+=dx*k;b.y+=dy*k;
@@ -1531,27 +1533,6 @@ bag.addEventListener('contextmenu',e=>e.preventDefault());
 bag.addEventListener('click',e=>{if(performance.now()-lpAt<700){e.stopPropagation();e.preventDefault()}},true);
 /* ketuk biasa: hanya pindah tas <-> hotbar (tidak ada lagi kunci dobel-ketuk) */
 bagTap=function(k){const f=S.inv[k];if(!f)return;BMS='';if(f.hs!=null)delete f.hs;else{const h=freeHS();if(h!=null)f.hs=h;else BMS='Hotbar penuh'}bagFast(k);bagSaveSoon()};
-})();
-/* ===== anti-lag adaptif: grafis turun SEMENTARA saat lag, otomatis balik ke pilihan pemain saat sudah lancar ===== */
-(()=>{
-const GN=['Low','Medium','HD+'];
-let n=0,t0=0,bad=0,good=0,cool=0,rw=15000,lastUp=0;
-const eff=()=>Math.max(0,(+CFG.gfx||0)-AGD);
-function apply(msg){RS=gfxRS(eff());rs();try{toast(msg,3000)}catch(e){}}
-function f(t){requestAnimationFrame(f);
- if(!playing||document.hidden||ED||KB){t0=0;n=0;bad=0;good=0;return}
- if(!t0){t0=t;n=0;return}
- n++;
- if(t-t0<2000)return;
- const fps=n*1000/(t-t0),tg=Math.min(CFG.fps||60,HZ||60);n=0;t0=t;
- if(cool>0){cool--;return}
- if(fps<tg*.72){good=0;bad++;
-  if(bad>=2&&AGD<(+CFG.gfx||0)){bad=0;if(Date.now()-lastUp<25000)rw=Math.min(120000,rw*2);AGD++;cool=1;apply('Lag terdeteksi, grafis turun sementara ke '+GN[eff()])}}
- else{bad=0;
-  if(AGD>0){if(fps>=tg*.9){good+=2000;if(good>=rw){good=0;AGD--;lastUp=Date.now();cool=1;apply('Sudah lancar, grafis kembali ke '+GN[eff()])}}else good=0}
-  else if(rw>15000&&Date.now()-lastUp>60000)rw=15000}}
-requestAnimationFrame(f);
-window.__gfxAuto={get drop(){return AGD},get eff(){return eff()},tick:f};
 })();
 </script>
 <script>
