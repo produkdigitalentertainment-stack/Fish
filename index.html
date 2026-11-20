@@ -103,7 +103,7 @@ h1 small{font-size:34px;color:#fff;-webkit-text-stroke:0}
 #me{gap:8px}
 #rk,#eq{z-index:9;padding:0;border:4px solid #f4ecd6;border-radius:20px;background:#fdf6e3;overflow:hidden;text-align:left;flex-direction:column;width:92%;max-width:860px;height:90%}
 .rkb,.eqb{display:flex;gap:10px;padding:10px;flex:1 1 auto;min-height:0}
-.sd{width:150px;flex:0 0 auto;background:#f4ead0;border-radius:16px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.sd{overflow-y:auto;min-height:0;width:150px;flex:0 0 auto;background:#f4ead0;border-radius:16px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .sd button{display:flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:9px 10px;font:inherit;font-size:14px;color:#5a4a2a;background:none;cursor:pointer;text-align:left}
 .sd button.on{background:linear-gradient(#2a84f0,#1a64d0);color:#fff;box-shadow:0 3px 0 #0b3f94}
 .sd .rs{margin-top:auto;background:#e6d9b8;border-radius:12px;padding:7px;font-size:12px;text-align:center;color:#6a5a3a}
@@ -239,11 +239,13 @@ const fmtW=w=>w<1000?w+' gr':w<1e6?(w/1000).toFixed(1).replace('.',',')+' kg':(w
 const RODW0=[95,4,1,0,0],RODW1=[68,22,8.5,1.3,.2];
 /* Rod Mythic: dasar sama, tiap rod punya keunggulan sendiri (tidak ada yang lebih unggul di semua hal) */
 const RSIG={22:'Ikan 18% lebih tenang & lambat',23:'Peluang Legend–Mitos x1,35',24:'Bar tarikan terisi 20% lebih cepat'};
-function rodW(i){i|=0;const L=i>=22?1.12:Math.max(0,Math.min(1,i/21)),w=RODW0.map((a,j)=>a+(RODW1[j]-a)*L);if(i==23)for(let j=2;j<5;j++)w[j]*=1.35;return w}
+function rodW(i){i|=0;const L=i>=22?1.12:Math.max(0,Math.min(1,i/21)),w=RODW0.map((a,j)=>a+(RODW1[j]-a)*L);if(i==23)for(let j=2;j<5;j++)w[j]*=1.35;{const t=lvT();w[2]*=1+.5*t;w[3]*=1+.3*t;w[4]*=1+.15*t}return w}
+/* bonus level: naik pelan dari Lv1 sampai Lv100 (Legend +50%, Mythic +30%, Mitos +15%; Common bisa diundi ulang sampai 40%) */
+function lvT(){return Math.max(0,Math.min(1,((S&&S.lv|0)-1)/99))}
 const FZN=[.34,.28,.22,.17,.13,.24],FSPD=[.3,.45,.65,.9,1.2,.55],FAG=[.6,.85,1.1,1.4,1.7,.9];
 const rr=x=>Math.max(0,Math.min(5,x|0)),rodZ=i=>(i|0)==0?.9:1+Math.min(i|0,21)*.004,rodSlow=i=>(i|0)==22?.82:1,rodPg=i=>(i|0)==24?1.2:1;
 function rodSig(i){i|=0;if(RSIG[i])return RSIG[i];return i==0?'-':'Zona hijau +'+(Math.min(i,21)*.4).toFixed(1).replace('.',',')+'%'}
-function roll(bk,rod,sh){bk=bk||0;const w=rodW(rod).map((x,j)=>j?x*(1+bk*1.6)*(sh?1.3:1):x);let r=Math.random()*w.reduce((a,b)=>a+b,0),i=0;while(i<4&&r>w[i]){r-=w[i];i++}while(i>0&&w[i]<=0)i--;
+function roll(bk,rod,sh){bk=bk||0;const w=rodW(rod).map((x,j)=>j?x*(1+bk*1.6)*(sh?1.3:1):x);const sm=w.reduce((a,b)=>a+b,0),dr=()=>{let r=Math.random()*sm,k=0;while(k<4&&r>w[k]){r-=w[k];k++}while(k>0&&w[k]<=0)k--;return k};let i=dr();if(i==0&&Math.random()<.4*lvT())i=dr();
  const l=FISH.filter(f=>f[0]==i),f=l[Math.random()*l.length|0],fr=Math.pow(Math.random(),3-1.2*bk),wt=Math.round(f[3]+(f[4]-f[3])*fr);
  return{r:i,n:f[1],c:f[2],w:wt,v:Math.max(1,Math.round(f[5]*(.6+.8*fr))),cm:(5+Math.cbrt(wt)*2.2).toFixed(1).replace('.',',')}}
 let S={name:'Aldi',lv:1,xp:0,gems:0,total:0,best:0,inv:[],char:6,rod:0,rods:[0],bait:0,baits:{},col:{}};
@@ -402,7 +404,7 @@ function end(win){$('#fg').style.display='none';const _q=F.q|0;if(win)got(F.f);e
 function earn(g,c){g=+g||0;c=+c||0;if(g>0)S.eg=(+S.eg||0)+g;if(c>0)S.ec=(+S.ec||0)+c}
 function stkLost(){const n=S.stk|0;S.stk=0;toast(n>=2?'Ikan lepas! Streak x'+n+' hilang':'Ikan lepas!')}
 function drawFlame(x,y,n){g.save();const bx=x+5,by=y+1;g.lineJoin='round';g.beginPath();g.moveTo(bx,by-11);g.bezierCurveTo(bx+2,by-8,bx+5,by-6,bx+4.5,by-2.5);g.bezierCurveTo(bx+4,by+.5,bx+1.5,by+1.5,bx,by+1.5);g.bezierCurveTo(bx-1.5,by+1.5,bx-4,by+.5,bx-4.5,by-2.5);g.bezierCurveTo(bx-5,by-5,bx-2,by-6,bx-1.5,by-8.5);g.bezierCurveTo(bx-.8,by-9.5,bx-.3,by-10.3,bx,by-11);g.closePath();g.lineWidth=1.6;g.strokeStyle='rgba(90,25,0,.85)';g.stroke();g.fillStyle='#ff7a1a';g.fill();g.beginPath();g.moveTo(bx,by-6);g.bezierCurveTo(bx+2.2,by-4,bx+2.5,by-1.5,bx,by+.5);g.bezierCurveTo(bx-2.5,by-1.5,bx-2.2,by-4,bx,by-6);g.fillStyle='#ffe36a';g.fill();g.font='bold 10px Trebuchet MS,Verdana,sans-serif';g.textAlign='left';g.lineWidth=2.5;g.strokeStyle='#000b';g.strokeText(n,bx+7,by);g.fillStyle='#ffc46a';g.fillText(n,bx+7,by);g.restore()}
-function got(f){if(f.t)return gotJunk(f);S.stk=(S.stk|0)+1;if(S.stk%5==0)setTimeout(()=>{try{toast('Streak pancing x'+S.stk+'!',2200)}catch(e){}},900);qCount(f);try{lqCount(f)}catch(e){}recentAdd(f.n);sfx('catch');trackBest(f);try{netCatch(f)}catch(e){}const xp=8+(f.r==5?1.5:f.r)*14+Math.round(f.v/10);S.xp+=xp;{const cb=FCR[f.n]|0;if(cb>0)setTimeout(()=>{try{toast('Jual ikan ini untuk dapat +'+cb+' kristal',2400)}catch(e){}},700)}S.total+=f.w;S.best=Math.max(S.best,f.w);const nw=!S.col[f.n];if(S.inv.length<CAP())S.inv.push({n:f.n,c:f.c,w:f.w,r:f.r,v:f.v,hs:freeHS()});else setTimeout(()=>toast('Tas penuh! Ikan tidak masuk tas, buang dulu'),1300);{const e=S.col[f.n]||(S.col[f.n]={n:0,best:0,r:f.r,c:f.c});e.n++;e.best=Math.max(e.best,f.w)}
+function got(f){if(f.t)return gotJunk(f);S.stk=(S.stk|0)+1;if(S.stk%5==0)setTimeout(()=>{try{toast('Streak pancing x'+S.stk+'!',2200)}catch(e){}},900);qCount(f);try{lqCount(f)}catch(e){}recentAdd(f.n);sfx('catch');trackBest(f);try{netCatch(f)}catch(e){}const xp=8+(f.r==5?1.5:f.r)*14+Math.round(f.v/10);S.xp+=xp;{const cb=FCR[f.n]|0;if(cb>0)setTimeout(()=>{try{toast('Jual ikan ini untuk dapat +'+cb+' kristal',2400)}catch(e){}},700)}S.total+=f.w;S.best=Math.max(S.best,f.w);const nw=!S.col[f.n];try{potGot(f)}catch(e){}if(S.inv.length<CAP())S.inv.push({n:f.n,c:f.c,w:f.w,r:f.r,v:f.v,hs:freeHS()});else setTimeout(()=>toast('Tas penuh! Ikan tidak masuk tas, buang dulu'),1300);{const e=S.col[f.n]||(S.col[f.n]={n:0,best:0,r:f.r,c:f.c});e.n++;e.best=Math.max(e.best,f.w)}
  let up=0;while(S.xp>=need(S.lv)){S.xp-=need(S.lv);S.lv++;up=1}save();
  const p=$('#pop');p.innerHTML=fim(f.n,Math.round(120+fishT(f.w)*110))+'<div style="font-size:12px;color:'+RAR[f.r][1]+'">'+RAR[f.r][0]+'</div><div style="font-size:24px">'+f.n+'</div><div style="font-size:30px;color:#a83a1a">'+fmtW(f.w)+' <small style="font-size:13px;color:#6a5a3a">('+f.cm+' cm)</small></div><div style="margin:6px 0;font-size:15px;background:#e8f0fa;border-radius:12px;padding:4px 12px;display:inline-flex;gap:6px;align-items:center">Nilai '+ic.gem+f.v+'</div><div style="font-size:11px;color:#a86a1a">Jual dulu untuk dapat diamond</div><div style="font-size:12px;color:#2a8a3a">+'+xp+' XP'+(up?'  Naik level!':'')+(nw?'  Koleksi baru!':'')+'</div><div style="font-size:11px;color:#8a7a5a;margin-top:4px">Ketuk di mana saja untuk menutup</div>';p.style.display='block';popT=performance.now();ui()}
 $('#pop').onclick=()=>$('#pop').style.display='none';
@@ -425,7 +427,7 @@ function rollForced(){if(Math.random()<.95)return rollJunk();const c=FISH.filter
 function rollSmart0(bk,rod,q,sh){if(q)return rollForced();const base=()=>(rod|0)==0?rollWood(bk):roll(bk,rod);let f=base();if(sh&&f.r<1){const w=(rod|0)?rodW(rod):null,p0=w?1-w[0]/w.reduce((a,b)=>a+b,0):.14,x=Math.min(1,.3/Math.max(.05,1-p0));if(Math.random()<x){const g2=base();if(g2.r>=1)return g2}}return f}
 const RECENT=[];
 function rollSpecial(){const c=FISH.filter(f=>f[0]==5),x=c[Math.random()*c.length|0],fr=Math.pow(Math.random(),2);return mkFish(x,Math.round(x[3]+(x[4]-x[3])*fr))}
-function rollSmart(bk,rod,q,sh){if(!q){const bt=BAITS[LB|0];/* Special: butuh umpan ber-flag sp (peluang 0-1) + pancingan tier Rare ke atas; cacing tidak pernah */if(bt&&bt.sp&&LB>0&&(rod|0)>0&&RTIER[rod|0]>=1&&Math.random()<bt.sp)return rollSpecial()}
+function rollSmart(bk,rod,q,sh){if(!q){try{const pv=potRoll(bk,rod);if(pv)return pv}catch(e){}const bt=BAITS[LB|0];/* Special: butuh umpan ber-flag sp (peluang 0-1) + pancingan tier Rare ke atas; cacing tidak pernah */if(bt&&bt.sp&&LB>0&&(rod|0)>0&&RTIER[rod|0]>=1&&Math.random()<bt.sp)return rollSpecial()}
  let f=rollSmart0(bk,rod,q,sh);if(q||f.t)return f;let done=false;
  if(RECENT.length&&Math.random()<.3){const c=RECENT.map(n=>FISH[FIX[n]]).filter(x=>x&&x[0]==f.r);if(c.length){const x=c[Math.random()*c.length|0],lo=x[3],hi=(rod|0)==0?Math.min(x[4],10000):x[4];if(hi>=lo){const o=FISH[FIX[f.n]],fr0=o&&o[4]>o[3]?Math.max(0,Math.min(1,(f.w-o[3])/(o[4]-o[3]))):0;f=mkFish(x,Math.round(lo+(hi-lo)*fr0));done=true}}}
  if(!done&&f.r==0&&Math.random()<.22){const c=FISH.filter(x=>x[0]==0&&x[3]<=150&&x[4]>=50);if(c.length){const x=c[Math.random()*c.length|0];f=mkFish(x,rnd(Math.max(50,x[3]),Math.min(150,x[4])))}}
@@ -1037,7 +1039,7 @@ document.addEventListener('focusout',()=>{setTimeout(()=>{if(!isT(document.activ
 // ===== Toko: gacha rod, pelampung, quest kristal =====
 const FLN=['Pelampung Merah','Pelampung Biru','Pelampung Ungu','Pelampung Emas','Pelampung Raja'],FLP=[0,105,110,115,120];
 const TCL=['#8a8a8a','#2a7ad0','#e08a1a','#9a4ad0'],TNM=['Biasa','Rare','Legend','Mythic'],MYTH=[22,23,24],LEGP=[15,16,17,18,19,20,21],RAREP=[5,6,7,8,9,10,11,12,13,14],PITY=90;
-function CAP(){return 45+(S.slotx|0)}
+const CAPMAX=150;function CAP(){return Math.min(150,45+(S.slotx|0))}
 const INVO=[{n:5,g:500,c:0},{n:10,g:1000,c:100},{n:25,g:2100,c:220}];
 const QS=[{id:'lg',n:'Tangkap ikan Legend',need:2,r:2,rw:20},{id:'my',n:'Tangkap ikan Mythic',need:1,r:3,rw:40},{id:'sp',n:'Tangkap ikan Special',need:1,r:5,rw:30},{id:'mt',n:'Tangkap ikan Mitos',need:1,r:4,rw:80}];
 function qd(){const d=new Date().toISOString().slice(0,10);if(!S.qp||S.qp.d!=d)S.qp={d,c:{},cl:{}};return S.qp}
@@ -1050,10 +1052,11 @@ function renderSh(msg){const t=SHT;let body='';
   body='<div class="gc"><div class="gbn">'+rv(23)+CHEST+rv(24)+'<div class="gtg">Mythic &middot; 0,6%</div></div><div class="gin"><div class="gtt"><b>Gacha Rod Legenda</b><button class="mk" data-h="odds" style="background:#f4ecd6;color:#3b2a1a;box-shadow:0 3px 0 #c9b88f;font-size:12px;padding:6px 10px">Lihat peluang</button></div><div class="gsub">Mythic dijamin dalam <b style="color:#c01a4a">'+PITY+'</b> peti</div><div class="pb"><i style="width:'+Math.min(100,pit/PITY*100)+'%"></i></div><div class="gsub2">'+pit+' / '+PITY+' peti sejak Mythic terakhir</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:6px"><button class="gb1" data-h="pf" '+(fl?'':'disabled ')+'style="width:100%;padding:5px 4px;background:'+(fl?'linear-gradient(#3cc060,#1e8a3a)':'#9a9a9a')+';box-shadow:0 4px 0 '+(fl?'#136a28':'#6a6a6a')+'">'+(fl?'Spin Gratis &middot; sisa '+fl+'x':'Spin gratis habis, kembali besok')+'<br><small style="font-size:10px">'+(fri?'Hari Jumat: 5x gratis!':'Gratis 1x tiap hari &middot; Jumat 5x')+'</small></button><div class="gbt" style="margin-top:0"><button class="gb1" data-h="p1">Buka 1x<br>'+ic.cry+' 250</button><button class="gb2" data-h="p10"><span class="hm">Hemat 10%</span>Buka 10x<br>'+ic.cry+' 2.250</button></div></div></div></div>'}
  
  else if(t=='float'){body='<div class="fg">'+FLN.map((n,i)=>{const own=S.fown.indexOf(i)>=0,on=(S.flt|0)==i;return'<div class="fc'+(on?' on':'')+'"><div class="fi">'+sp('fl',i,0,.5)+'</div><b>'+n+'</b>'+(own?(on?'<span class="fs">Dipakai</span>':'<button class="use" data-h="fq" data-i="'+i+'">Pakai</button>'):FLP[i]?'<button class="buy" data-h="fb" data-i="'+i+'">Beli '+ic.gem+FLP[i]+'</button>':'<span class="fs lk">Segera hadir</span>')+'</div>'}).join('')+'</div>'}
- else if(t=='inv'){body='<div class="ql"><div class="qh" style="margin:0 0 6px">Kapasitas tas sekarang: <b>'+CAP()+'</b> slot</div>'+INVO.map(o=>'<div class="qr"><div class="qn"><b>+'+o.n+' Slot</b><small>Tambah kapasitas tas jadi '+(CAP()+o.n)+'</small></div><div style="display:flex;gap:6px;flex:0 0 auto"><button class="buy" data-h="ib" data-n="'+o.n+'" data-c="gem" style="display:flex;align-items:center;gap:4px">'+ic.gem+o.g.toLocaleString('id-ID')+'</button>'+(o.c?'<button class="buy" data-h="ib" data-n="'+o.n+'" data-c="cr" style="display:flex;align-items:center;gap:4px">'+ic.cry+o.c+'</button>':'')+'</div></div>').join('')+'</div>'}
+ else if(t=='inv'){body='<div class="ql"><div class="qh" style="margin:0 0 6px">Kapasitas tas sekarang: <b>'+CAP()+'</b> / '+CAPMAX+' slot (maksimum)</div>'+INVO.map(o=>'<div class="qr"><div class="qn"><b>+'+o.n+' Slot</b><small>'+(CAP()+o.n>CAPMAX?'Melebihi batas '+CAPMAX+' slot':'Tambah kapasitas tas jadi '+(CAP()+o.n))+'</small></div><div style="display:flex;gap:6px;flex:0 0 auto"><button class="buy" data-h="ib" data-n="'+o.n+'" data-c="gem" style="display:flex;align-items:center;gap:4px">'+ic.gem+o.g.toLocaleString('id-ID')+'</button>'+(o.c?'<button class="buy" data-h="ib" data-n="'+o.n+'" data-c="cr" style="display:flex;align-items:center;gap:4px">'+ic.cry+o.c+'</button>':'')+'</div></div>').join('')+'</div>'}
+ else if(t=='potion'){body=potBody()}
  else{const q=qd();body='<div class="ql">'+QS.map(x=>{const c=Math.min(x.need,q.c[x.id]||0),dn=c>=x.need,cl=!!q.cl[x.id];return'<div class="qr"><div class="qn"><b>'+x.n+'</b><small>'+c+'/'+x.need+' &middot; reset tiap hari</small></div><div class="qrw">'+ic.cry+'+'+x.rw+'</div>'+(cl?'<span class="fs">Diklaim</span>':dn?'<button class="use" data-h="qc" data-i="'+x.id+'">Klaim</button>':'<span class="fs lk">Belum</span>')+'</div>'}).join('')+'</div><div class="qh">Kristal juga bisa didapat (1%) saat menjual ikan Rare ke atas dari Tas.</div>'}
  const tb=(k,l,i2)=>'<button data-t="'+k+'" class="'+(t==k?'on':'')+'">'+i2+'<span>'+l+'</span></button>';
- $('#sh').innerHTML='<div class="bh"><div class="bic">'+sv('<path d="M2 6l2-4h10l2 4v2H2z" fill="#e04a3a"/><rect x="3" y="8" width="12" height="8" fill="#c8884a"/>')+'</div><span style="flex:1">Toko</span><span class="cur">'+ic.gem+S.gems.toLocaleString('id-ID')+'</span><span class="cur">'+ic.cry+(S.cr|0).toLocaleString('id-ID')+'</span><button class="bx" data-x="1" style="margin-left:4px">'+XI+'</button></div><div class="eqb" style="flex:1;min-height:0"><div class="sd">'+tb('gacha','Gacha Rod',sv('<rect x="2" y="7" width="14" height="9" rx="1.5" fill="#6a4ab0"/><path d="M2 8c0-4 3-6 7-6s7 2 7 6z" fill="#8a64d0"/><rect x="7.5" y="8" width="3" height="4" fill="#f0c030"/>'))+tb('float','Pelampung',sv('<rect x="8" y="1" width="2" height="4" fill="#222"/><circle cx="9" cy="11" r="5.5" fill="#fff" stroke="#222"/><path d="M3.5 11a5.5 5.5 0 0 1 11 0z" fill="#e03a3a"/>'))+tb('inv','Inventory',icimg(ICO.bag,22))+tb('quest','Quest',sv('<rect x="3" y="2" width="12" height="14" rx="2" fill="#f4ecd6" stroke="#8a6a3a"/><path d="M6 6h6M6 9h6M6 12h4" stroke="#8a6a3a" stroke-width="1.4"/>'))+'</div><div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0">'+body+'<div id="shm">'+(msg||'')+'</div></div></div><div id="shr"></div>'}
+ $('#sh').innerHTML='<div class="bh"><div class="bic">'+sv('<path d="M2 6l2-4h10l2 4v2H2z" fill="#e04a3a"/><rect x="3" y="8" width="12" height="8" fill="#c8884a"/>')+'</div><span style="flex:1">Toko</span><span class="cur">'+ic.gem+S.gems.toLocaleString('id-ID')+'</span><span class="cur">'+ic.cry+(S.cr|0).toLocaleString('id-ID')+'</span><button class="bx" data-x="1" style="margin-left:4px">'+XI+'</button></div><div class="eqb" style="flex:1;min-height:0"><div class="sd">'+tb('gacha','Gacha Rod',sv('<rect x="2" y="7" width="14" height="9" rx="1.5" fill="#6a4ab0"/><path d="M2 8c0-4 3-6 7-6s7 2 7 6z" fill="#8a64d0"/><rect x="7.5" y="8" width="3" height="4" fill="#f0c030"/>'))+tb('float','Pelampung',sv('<rect x="8" y="1" width="2" height="4" fill="#222"/><circle cx="9" cy="11" r="5.5" fill="#fff" stroke="#222"/><path d="M3.5 11a5.5 5.5 0 0 1 11 0z" fill="#e03a3a"/>'))+tb('inv','Inventory',icimg(ICO.bag,22))+tb('quest','Quest',sv('<rect x="3" y="2" width="12" height="14" rx="2" fill="#f4ecd6" stroke="#8a6a3a"/><path d="M6 6h6M6 9h6M6 12h4" stroke="#8a6a3a" stroke-width="1.4"/>'))+tb('potion','Ramuan',sv('<path d="M7 2h4v4l3.5 6.5A3 3 0 0 1 11.8 17H6.2a3 3 0 0 1-2.7-4.5L7 6z" fill="#9a6ae8" stroke="#3a2a7a" stroke-width="1.3"/><path d="M5 11h8" stroke="#fff" stroke-width="1.4"/>'))+'</div><div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0">'+body+'<div id="shm">'+(msg||'')+'</div></div></div><div id="shr"></div>'}
 function openSh(t){if(F.s==3)return;closeP();closeBag();closeSet();closeEq();$('#rk').style.display='none';if(t)SHT=t;renderSh();$('#sh').style.display='flex'}
 function closeSh(){$('#sh').style.display='none'}
 $('#bsh').onclick=()=>openSh();$('#cr').onclick=()=>openSh('gacha');
@@ -1078,10 +1081,10 @@ $('#sh').addEventListener('click',e=>{const x=e.target.closest('[data-x],[data-t
  const h=x.dataset.h,i=x.dataset.i;
  if(h=='rx'){$('#shr').innerHTML='';return}
  if(h=='odds'){const nm=a=>a.map(k=>RODN[k]).join(', ');return info('Peluang Gacha Rod Legenda','<table style="width:100%;font-size:12px;text-align:left"><tr><td style="color:#9a4ad0"><b>Mythic</b></td><td><b>0,6%</b></td><td>'+nm(MYTH)+'</td></tr><tr><td style="color:#e08a1a"><b>Legend</b></td><td><b>5%</b></td><td>'+nm(LEGP)+'</td></tr><tr><td style="color:#2a7ad0"><b>Rare</b></td><td><b>24,4%</b></td><td>'+nm(RAREP)+'</td></tr><tr><td><b>Biasa</b></td><td><b>70%</b></td><td>20x Cacing atau 300 Diamond</td></tr></table><div style="margin-top:6px">Mythic dijamin paling lambat di peti ke-'+PITY+'. Buka 10x pasti ada rod. Rod dobel diganti Diamond / Kristal.</div>')}
- if(h=='pf')return doPull(1,true);if(h=='p1')return doPull(1);if(h=='p10')return doPull(10);
+ if(String(h).slice(0,2)=='pt')return potClick(x);if(h=='pf')return doPull(1,true);if(h=='p1')return doPull(1);if(h=='p10')return doPull(10);
  if(h=='fq'){S.flt=+i}
  else if(h=='fb'){const p=FLP[+i];if(S.gems<p)return renderSh('Diamond kurang, butuh '+p);S.gems-=p;S.fown.push(+i);S.flt=+i}
- else if(h=='ib'){const o=INVO.find(v=>v.n==+x.dataset.n);if(!o)return;if(x.dataset.c=='cr'){if((S.cr|0)<o.c)return renderSh('Kristal kurang, butuh '+o.c);S.cr-=o.c}else{if(S.gems<o.g)return renderSh('Diamond kurang, butuh '+o.g);S.gems-=o.g}S.slotx=(S.slotx|0)+o.n;sfx('catch');return(save(),ui(),renderSh('Tas +'+o.n+' slot! Kapasitas: '+CAP()))}
+ else if(h=='ib'){const o=INVO.find(v=>v.n==+x.dataset.n);if(!o)return;if(CAP()>=CAPMAX)return renderSh('Tas sudah maksimum ('+CAPMAX+' slot)');if(CAP()+o.n>CAPMAX)return renderSh('Melebihi batas '+CAPMAX+' slot, pilih paket lebih kecil');if(x.dataset.c=='cr'){if((S.cr|0)<o.c)return renderSh('Kristal kurang, butuh '+o.c);S.cr-=o.c}else{if(S.gems<o.g)return renderSh('Diamond kurang, butuh '+o.g);S.gems-=o.g}S.slotx=(S.slotx|0)+o.n;sfx('catch');return(save(),ui(),renderSh('Tas +'+o.n+' slot! Kapasitas: '+CAP()))}
  else if(h=='qc'){const q=qd(),d=QS.find(v=>v.id==i);if(d&&!q.cl[i]&&(q.c[i]||0)>=d.need){q.cl[i]=1;S.cr=(S.cr|0)+d.rw;earn(0,d.rw)}}
  save();ui();renderSh()});
 // ===== NPC: label nama, title bar, bubble chat =====
@@ -1582,6 +1585,79 @@ setInterval(()=>{
  if(n-t0<1500)return;
  shown=1;show()
 },500);
+})();
+</script>
+<script>
+/* ===== Ramuan: tab di Toko, 1 ramuan aktif sekaligus, hitung mundur di layar, beli 1x per 10 jam, kembali 10% jika tidak dapat ===== */
+(()=>{
+const POT=[
+ {id:'sp',n:'Ramuan Special',r:5,p:.10,sec:50,g:1000,c:50,col:'#e8508a',d:'Peluang ikan Special +10%',h:'Butuh pancingan Rare ke atas'},
+ {id:'lg',n:'Ramuan Legend',r:2,p:.08,sec:40,g:2000,c:150,col:'#e08a1a',d:'Peluang ikan Legend +8%',h:'Tidak berlaku untuk Kayu Dasar'},
+ {id:'my',n:'Ramuan Mythic',r:3,p:.05,sec:25,g:3000,c:200,col:'#9a4ad0',d:'Peluang ikan Mythic +5%',h:'Tidak berlaku untuk Kayu Dasar'},
+ {id:'mt',n:'Ramuan Mitos',r:4,p:.02,sec:18,g:4500,c:350,col:'#14b8b0',d:'Peluang ikan Mitos +2%',h:'Tidak berlaku untuk Kayu Dasar'}];
+const HR10=10*3600*1000;
+const nowT=()=>{try{return srvNow()}catch(e){return Date.now()}};
+const st=()=>{if(!S.pot||typeof S.pot!=='object')S.pot={};if(!S.potT||typeof S.potT!=='object')S.potT={}};
+const active=()=>{const a=S.pa;return a&&a.end>nowT()?a:null};
+const pOf=id=>POT.find(v=>v.id===id);
+const cd=ms=>{const m=Math.ceil(ms/60000),h=Math.floor(m/60);return h>0?h+'j '+(m%60)+'m':m+'m'};
+function rollRar(r,bk){const l=FISH.filter(f=>f[0]==r),f=l[Math.random()*l.length|0],fr=Math.pow(Math.random(),3-1.2*(bk||0));return mkFish(f,Math.round(f[3]+(f[4]-f[3])*fr))}
+window.potRoll=function(bk,rod){const a=active();if(!a)return null;const P=pOf(a.id);if(!P)return null;rod|=0;if(rod<=0)return null;
+ if(P.r==5)return(RTIER[rod]>=1&&Math.random()<P.p)?rollSpecial():null;
+ return Math.random()<P.p?rollRar(P.r,bk):null};
+window.potGot=function(f){const a=S.pa;if(!a)return;const P=pOf(a.id);if(P&&f&&f.r===P.r)a.got=(a.got|0)+1};
+window.potBody=function(){st();const a=active();
+ let h='<div class="ql"><div class="qh" style="margin:0 0 4px">Hanya 1 ramuan aktif sekaligus. Tiap ramuan bisa dibeli 1x per 10 jam. Jika tidak dapat ikannya, 10% harga kembali.</div>';
+ if(a){const P=pOf(a.id);h+='<div class="qr" style="border-color:'+P.col+'"><div class="qn"><b>Aktif: '+P.n+'</b><small>Sisa '+Math.max(0,Math.ceil((a.end-nowT())/1000))+' detik</small></div></div>'}
+ POT.forEach(P=>{const own=(S.pot[P.id]||[]).length>0,left=(S.potT[P.id]||0)+HR10-nowT();let act;
+  if(own)act='<button class="use" data-h="ptu" data-i="'+P.id+'">Pakai</button>';
+  else if(left>0)act='<span class="fs lk">Beli lagi dalam '+cd(left)+'</span>';
+  else act='<div style="display:flex;gap:6px;flex:0 0 auto"><button class="buy" data-h="ptb" data-i="'+P.id+'" data-c="gem" style="display:flex;align-items:center;gap:4px">'+ic.gem+P.g.toLocaleString('id-ID')+'</button><button class="buy" data-h="ptb" data-i="'+P.id+'" data-c="cr" style="display:flex;align-items:center;gap:4px">'+ic.cry+P.c+'</button></div>';
+  h+='<div class="qr" style="border-color:'+P.col+'88"><div class="qn"><b style="color:'+P.col+'">'+P.n+'</b><small>'+P.d+' &middot; '+P.sec+' detik<br>'+P.h+'</small></div>'+act+'</div>'});
+ return h+'</div>'};
+window.potClick=function(x){st();const h=x.dataset.h,P=pOf(x.dataset.i);if(!P)return;
+ if(h==='ptb'){
+  if((S.pot[P.id]||[]).length)return renderSh('Kamu sudah punya '+P.n+', pakai dulu');
+  const left=(S.potT[P.id]||0)+HR10-nowT();if(left>0)return renderSh('Bisa dibeli lagi dalam '+cd(left));
+  const c=x.dataset.c==='cr'?'cr':'gem';
+  if(c==='cr'){if((S.cr|0)<P.c)return renderSh('Kristal kurang, butuh '+P.c);S.cr-=P.c}
+  else{if((+S.gems||0)<P.g)return renderSh('Diamond kurang, butuh '+P.g);S.gems-=P.g}
+  (S.pot[P.id]=S.pot[P.id]||[]).push(c);S.potT[P.id]=nowT();
+  try{sfx('catch')}catch(e){}save();ui();return renderSh(P.n+' dibeli. Ketuk Pakai untuk mengaktifkan')}
+ if(h==='ptu'){
+  if(active())return renderSh('Masih ada ramuan aktif, tunggu sampai habis');
+  const L=S.pot[P.id]||[];if(!L.length)return renderSh('Ramuan tidak ada');
+  const c=L.pop();S.pa={id:P.id,end:nowT()+P.sec*1000,c:c,got:0};
+  save();ui();try{toast(P.n+' aktif '+P.sec+' detik',2200)}catch(e){}return renderSh(P.n+' aktif selama '+P.sec+' detik!')}
+};
+/* hitung mundur di layar */
+const app=document.getElementById('app');if(!app)return;
+const el=document.createElement('div');el.id='potT';
+el.style.cssText='position:absolute;left:50%;top:13%;transform:translateX(-50%);z-index:7;display:none;pointer-events:none;background:#fdf6e3;border-radius:14px;padding:4px 12px 6px;box-shadow:0 2px 0 #c9b88f;font-size:12px;text-align:center;white-space:nowrap;color:#3b2a1a';
+const tx=document.createElement('div'),bw=document.createElement('div'),bar=document.createElement('i');
+bw.style.cssText='height:4px;background:#e6d9b8;border-radius:2px;margin-top:3px;overflow:hidden';
+bar.style.cssText='display:block;height:4px;border-radius:2px;width:100%';
+bw.appendChild(bar);el.appendChild(tx);el.appendChild(bw);app.appendChild(el);
+function tick(){try{
+ if(typeof S==='undefined'||!S)return;
+ const a=S.pa,t=nowT();
+ if(a&&a.end<=t){
+  /* tunggu sampai tarikan ikan yang sedang berjalan selesai (maks 25 dtk) supaya ikan yang baru ditarik tetap dihitung */
+  if(typeof F!=='undefined'&&F&&F.s==3&&t-a.end<25000){tx.textContent='Menunggu hasil tarikan...'}
+  else{
+   S.pa=null;const P=pOf(a.id);let m='';
+   if(P){if(!(a.got>0)){const cr=a.c==='cr',amt=Math.floor((cr?P.c:P.g)*.1);if(cr)S.cr=(S.cr|0)+amt;else S.gems=(+S.gems||0)+amt;m=P.n+' habis. Tidak dapat ikan '+RAR[P.r][0]+', kembali '+amt+(cr?' kristal':' diamond')}
+   else m=P.n+' habis. Dapat '+a.got+' ikan '+RAR[P.r][0]}
+   save();ui();if(m)toast(m,3600)}
+ }
+ const b=active(),show=!!b&&typeof playing!=='undefined'&&playing&&!(typeof ED!=='undefined'&&ED);
+ if(show){const P=pOf(b.id),left=Math.max(0,b.end-t),sec=Math.ceil(left/1000);
+  tx.textContent=P.n+' +'+Math.round(P.p*100)+'% \u00b7 '+Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+  bar.style.background=P.col;bar.style.width=Math.min(100,left/(P.sec*10))+'%';el.style.display='block'}
+ else if(a&&a.end<=t&&typeof playing!=='undefined'&&playing){el.style.display='block'}
+ else el.style.display='none';
+}catch(e){}}
+setInterval(tick,250);
 })();
 </script>
 </body></html>
