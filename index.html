@@ -169,7 +169,34 @@ h1 small{font-size:34px;color:#fff;-webkit-text-stroke:0}
 .bx::after{content:"";position:absolute;inset:-6px}
 #bag .bt{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 </style>
-<style>#sh .ql,#sh .ql *,#sh .fg,#sh .fg *,#sh .sd,#sh .sd *{touch-action:pan-y}#sh .ql,#sh .fg{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:6px}#sh button,#sh .buy,#sh .use{touch-action:manipulation}</style></head><body><div id="app"><canvas id="c"></canvas><div id="ld"><h2>FISH its</h2><div id="ldt" style="font-size:14px">Memuat...</div><div id="ldbar"><i id="ldb"></i></div><div style="font-size:11px;opacity:.8">Menyiapkan server Fish land</div></div>
+<style>#sh .ql,#sh .ql *,#sh .fg,#sh .fg *,#sh .sd,#sh .sd *{touch-action:pan-y}#sh .ql,#sh .fg{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:6px}#sh button,#sh .buy,#sh .use{touch-action:manipulation}</style><style id="duelCss">
+#dlb{left:1.5%;top:calc(3% + 50px);height:28px;padding:3px 10px;font-size:12px;cursor:pointer;z-index:2;max-width:210px;gap:5px}
+#dlb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#dlb.on{background:#ffe9a8;box-shadow:0 2px 0 #d49a1a}
+#dlt{left:50%;top:calc(3% + 40px);transform:translateX(-50%);display:none;z-index:6;cursor:pointer;font-size:14px;gap:8px;padding:3px 14px;background:#243044ee;color:#fff;box-shadow:0 2px 0 #0006}
+#dlt b{font-size:15px;letter-spacing:1px}#dlt b.low{color:#ff8a6a}
+.dlc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:none;z-index:18;background:#fdf6e3;border:5px solid #5aa0e8;border-radius:22px;padding:10px 14px;width:90%;max-width:600px;max-height:94%;overflow-y:auto;text-align:left;font-size:13px;color:#3b2a1a}
+#dli{z-index:19;max-width:420px;text-align:center}
+#dlp,#dlp *,#dli,#dli *{touch-action:pan-y}#dlp input{user-select:text;-webkit-user-select:text;touch-action:manipulation;padding:7px;border-radius:10px;border:2px solid #e0d2a8;font:inherit;background:#fff;color:#3b2a1a;text-align:center}
+#dlp button,#dli button{touch-action:manipulation}
+#dlcd{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;z-index:17;pointer-events:none;color:#ffc93a;font-size:96px;line-height:1;-webkit-text-stroke:4px #fff;paint-order:stroke fill;text-shadow:0 6px 0 #1a4a9a}
+.dlh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;font-size:18px}
+.dlk{font-size:11px;color:#6a5a3a;margin-top:6px}
+.dlrow{display:flex;align-items:center;gap:6px;padding:4px 2px;border-bottom:1px solid #eee1bc;min-height:36px}
+.dlrow.dlhd{font-size:10px;color:#6a5a3a;min-height:20px;border-bottom:2px solid #ead9a8}
+.dlfi{width:26px;height:20px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden}
+.dlnm{flex:1;min-width:0;line-height:1.15}.dlnm b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dlnm small{font-size:10px;color:#6a5a3a}
+.dlrt{border-radius:8px;padding:1px 7px;font-size:10px;color:#fff;flex:0 0 auto;text-align:center;min-width:52px}
+.dlpr{display:flex;flex-direction:column;align-items:flex-end;font-size:11px;min-width:50px;line-height:1.1}.dlpr small{font-size:9px;color:#8a7a5a}
+.dlsc{font-size:13px;color:#1a64d0;min-width:52px;text-align:right}
+.dllist{max-height:34vh;overflow-y:auto;background:#fffaf0;border:3px solid #ead9a8;border-radius:12px;padding:2px 6px;margin-top:6px;touch-action:pan-y}
+.dlsb{flex:1;min-width:0;background:#fffaf0;border:3px solid #ead9a8;border-radius:14px;padding:5px 8px;text-align:center}
+.dlsb.me{border-color:#1a64d0;background:#e4f0ff}.dlsb.ld{box-shadow:0 0 0 2px #ffc93a}
+.dlsn{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dlst{font-size:22px;color:#1a64d0}.dlsb small{font-size:10px;color:#6a5a3a}
+.dlvs{align-self:center;font-size:14px;color:#c01a4a}
+.mk.sel{background:#2a9a4a;box-shadow:0 3px 0 #1a6a2a}
+.dlft{position:sticky;bottom:-10px;background:#fdf6e3;padding:4px 0 8px;margin-top:4px;border-top:2px dashed #e0d2a8}
+</style></head><body><div id="app"><canvas id="c"></canvas><div id="ld"><h2>FISH its</h2><div id="ldt" style="font-size:14px">Memuat...</div><div id="ldbar"><i id="ldb"></i></div><div style="font-size:11px;opacity:.8">Menyiapkan server Fish land</div></div>
 <div id="title"><div id="sun"></div><button class="mk" id="adm" style="position:absolute;left:2%;bottom:4%;z-index:2;display:none">Admin</button><div class="card" id="pin" style="z-index:7"><div style="font-size:18px">Masuk Admin</div><input id="pi" type="password" inputmode="text" autocapitalize="off" placeholder="Kata sandi" style="width:130px;margin:8px 0;padding:7px;border-radius:10px;border:2px solid #c9b88f;text-align:center;font:inherit"><div id="pm" style="color:#c03a2a;font-size:12px"></div><div style="display:flex;gap:8px;justify-content:center"><button class="mk" id="pok">Masuk</button><button class="mk" id="pcn" style="background:#8a8a90;box-shadow:0 3px 0 #5a5a60">Batal</button></div></div><div class="lf"><div class="wel">Selamat datang di game FISH its</div><h1>FISH <small>its</small></h1><div class="by">Fish by: procing Aldi<br>Developer: Muhammad Aldi<br><small style="opacity:.6">build r12</small></div><button class="big b" id="gl">Masuk dengan Google</button><div id="nmw" style="display:none"><input id="nm" maxlength="14" placeholder="Nama pemain"></div><button class="big y" id="play" disabled>Main!</button></div><div class="rt"><h3>Server global<span id="cnt"></span></h3><div class="isl"><div><b>Fish land</b><i id="srv">Masuk dengan Google dulu</i></div><span id="onl"></span></div><div id="dst" style="margin-top:6px;font-size:12px;line-height:1.35;color:#6a5a3a;text-align:center;background:#fff8e4;border:2px solid #ead9a8;border-radius:10px;padding:5px 8px"></div></div></div>
 <div id="ed"><div class="pill" style="left:1.5%;top:3%;font-size:12px">Mode Admin: Atur Map</div><div id="eTop" style="position:absolute;right:1.5%;top:3%;display:flex;gap:6px"><button class="pill eb" id="eDel" style="background:#f6c8c0">Hapus semua</button><button class="pill eb" id="eDef">Bawaan</button><button class="pill eb" id="eOk" style="background:#bdf0c8">Simpan dan keluar</button></div><div id="eAct"></div><div id="eTop2" style="position:absolute;right:1.5%;top:15%;display:flex;gap:6px"><button class="pill eb" id="eUn">Urungkan</button><button class="pill eb" id="eLkAll" style="background:#f6c8c0">Kunci semua</button><button class="pill eb" id="eOpAll" style="background:#d6efc8">Buka semua</button></div><div id="eTs" style="position:absolute;left:50%;top:24%;transform:translateX(-50%);background:#000a;color:#fff;border-radius:12px;padding:8px 16px;font-size:13px;display:none"></div><div id="eBar"><div id="eTabs"></div><div id="eList"></div></div><div class="card" id="eCf" style="z-index:8"></div></div>
 <div id="hud"><div class="pill" id="me" style="left:1.5%;top:3%;min-width:170px"></div><div class="pill" id="isn" style="left:50%;top:3%;transform:translateX(-50%)"></div><div class="pill ib" id="bc" style="left:1.5%;top:24%"></div><div class="pill ib" id="bf" style="left:1.5%;top:38%"></div><div class="pill ib" id="bk" style="left:1.5%;top:52%"></div>
@@ -1882,6 +1909,345 @@ addEventListener('blur',()=>{hold=false});
 ov.querySelectorAll('.prt button').forEach(b=>b.addEventListener('click',()=>{if(mode)return;T=+b.dataset.t;ov.querySelectorAll('.prt button').forEach(x=>x.classList.toggle('on',x===b));show(null)}));
 $q('prx').addEventListener('click',closeP);
 ob.addEventListener('click',openP);
+})();
+</script>
+<script id="duelFish">
+/* ===== DUEL 1 vs 1 / 2 vs 2 =====
+   Semua data duel disimpan di players/{uid}/dl (node milik sendiri), tidak menyentuh data lain.
+   Fitur ini bersifat tambahan: semua kode dibungkus try/catch agar tidak mengganggu game. */
+(function(){
+if(window.__duelFish)return;window.__duelFish=1;
+const DW=[1,1.5,2,3,4,2],MINS=[1,2,3,4,5],INV_TTL=45000,GRACE=12000,FIN_WAIT=9000;
+let D=null,PL={},DS={},SEEN={},RES=null,view='',vsig='',invCur=null,invT=null,pT=null,tab='me',goT=0,popupOn=false;
+const SEL={m:1,min:1,cu:'g',am:10000,mate:null,opp:[]};
+const E=id=>document.getElementById(id);
+const nowS=()=>{try{return Math.round(srvNow())}catch(e){return Date.now()}};
+const me=()=>(typeof U!=='undefined'&&U&&U.uid)?U.uid:null;
+const nmx=x=>cln(x,14)||'Pemain';
+const fN=n=>(Math.round(+n)||0).toLocaleString('id-ID');
+const fT=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return String(s/60|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const cuIc=c=>c=='c'?gemImg(CRYI,15):gemImg(DIAI,15);
+const cuNm=c=>c=='c'?'Kristal':'Gems';
+const bal=c=>c=='c'?(S.cr|0):(+S.gems||0);
+const addBal=(c,n)=>{if(c=='c')S.cr=(S.cr|0)+n;else S.gems=(+S.gems||0)+n};
+const online=()=>!!(typeof db!=='undefined'&&db&&me()&&typeof pRef!=='undefined'&&pRef&&typeof NETOK!=='undefined'&&NETOK);
+const SW='<svg viewBox="0 0 24 24" width="17" height="17" style="flex:0 0 auto"><path d="M5 4l13 13M19 4L6 17" stroke="#3b2a1a" stroke-width="4" stroke-linecap="round"/><path d="M5 4l13 13M19 4L6 17" stroke="#dfe6f0" stroke-width="2" stroke-linecap="round"/><path d="M15 15l5 5M9 15l-5 5" stroke="#c8884a" stroke-width="3" stroke-linecap="round"/></svg>';
+
+/* ---------- tulis / hapus data duel milik sendiri ---------- */
+function errTxt(e){try{toast('Duel gagal: database menolak ('+((e&&e.code)||'error')+'). Tambahkan izin tulis untuk players/$uid/dl di Rules',5200)}catch(_){}}
+function dlWrite(o){try{if(!pRef)return Promise.resolve(false);return pRef.child('dl').set(o).then(()=>true,e=>{errTxt(e);return false})}catch(e){return Promise.resolve(false)}}
+function dlUpd(o){try{if(pRef)pRef.child('dl').update(o).catch(()=>{})}catch(e){}}
+function dlRm(){try{if(pRef)pRef.child('dl').remove().catch(()=>{})}catch(e){}}
+
+/* ---------- DOM ---------- */
+function build(){
+ const app=E('app'),hud=E('hud');if(!app||!hud||E('dlb'))return;
+ const b=document.createElement('div');b.className='pill';b.id='dlb';hud.appendChild(b);
+ const t=document.createElement('div');t.className='pill';t.id='dlt';hud.appendChild(t);
+ [['dlp','dlc'],['dli','dlc'],['dlcd','']].forEach(a=>{const d=document.createElement('div');d.id=a[0];if(a[1])d.className=a[1];app.appendChild(d)});
+ b.onclick=openMain;t.onclick=()=>openPanel('status');
+ E('dlp').addEventListener('click',onPanel);E('dli').addEventListener('click',onInv);
+ E('dlp').addEventListener('input',e=>{if(e.target&&e.target.id==='dlamt'){SEL.am=Math.max(0,Math.min(1e9,parseInt(String(e.target.value).replace(/\D/g,''))||0));updSum()}});
+ label()}
+
+/* ---------- label tombol & timer ---------- */
+function names(ids){return ids.map(u=>nmx(D&&D.nm&&D.nm[u]||(u===me()?S.name:(PL[u]&&PL[u].n)))).join(' & ')}
+function vsText(){if(!D)return '';return names(D.a)+' vs '+names(D.b)}
+function label(){const b=E('dlb');if(!b)return;let h;
+ if(!D)h=SW+'<span>Duel</span>';
+ else if(D.st==='wait')h=SW+'<span>Menunggu jawaban...</span>';
+ else h=SW+'<span>'+vsText()+'</span>';
+ if(b.dataset.h!==h){b.dataset.h=h;b.innerHTML=h}
+ b.classList.toggle('on',!!D);
+ const t=E('dlt');if(!t)return;
+ if(D&&(D.st==='run'||D.st==='fin'||D.st==='count')){const n=nowS();let tx,low=0;
+  if(D.st==='count'){tx='Mulai '+Math.max(0,Math.ceil((D.start-n)/1000))+'s'}
+  else if(D.st==='run'){const r=D.end-n;tx=fT(r);low=r<=10000}
+  else tx='Hitung...';
+  const h2='<b'+(low?' class="low"':'')+'>'+tx+'</b>';if(t.dataset.h!==h2){t.dataset.h=h2;t.innerHTML=h2}t.style.display='flex'}
+ else{t.style.display='none';t.dataset.h=''}
+ const c=E('dlcd');
+ if(c){if(D&&D.st==='count'){const k=Math.max(1,Math.min(5,Math.ceil((D.start-nowS())/1000)));c.innerHTML='<div style="font-size:15px;-webkit-text-stroke:0;text-shadow:0 2px 3px #000a;color:#fff">Duel dimulai dalam</div><div>'+k+'</div>';c.style.display='flex'}
+  else if(D&&D.st==='run'&&nowS()<D.start+900){c.innerHTML='<div>MULAI!</div>';c.style.display='flex'}
+  else c.style.display='none'}}
+
+/* ---------- panel ---------- */
+function openMain(){try{
+ if(!online()){toast('Duel butuh mode online. Masuk dengan Google dulu',2600);return}
+ openPanel(D?'status':'setup')}catch(e){console.warn(e)}}
+function openPanel(v){view=v;vsig='';const p=E('dlp');p.style.display='block';render();if(pT)clearInterval(pT);pT=setInterval(()=>{try{if(E('dlp').style.display!=='block'){clearInterval(pT);pT=null;return}if(view==='setup')renderList();else render()}catch(e){}},view==='setup'?2000:500)}
+function closePanel(){const p=E('dlp');if(p)p.style.display='none';if(pT){clearInterval(pT);pT=null}view='';vsig=''}
+function onPanel(e){try{const t=e.target.closest('[data-a]');if(!t)return;act(t.dataset.a,t.dataset.v,t.dataset.u)}catch(er){console.warn(er)}}
+
+function act(a,v,u){
+ if(a==='x'){closePanel();return}
+ if(a==='rc'){RES=null;closePanel();label();return}
+ if(a==='m'){SEL.m=+v===2?2:1;if(SEL.m===1){SEL.mate=null;SEL.opp=SEL.opp.slice(0,1)}render();return}
+ if(a==='mn'){SEL.min=Math.max(1,Math.min(5,+v|0));render();return}
+ if(a==='cu'){SEL.cu=v==='c'?'c':'g';render();return}
+ if(a==='am'){SEL.am=Math.max(0,+v|0);render();return}
+ if(a==='opp'&&u){if(SEL.mate===u)SEL.mate=null;const i=SEL.opp.indexOf(u);
+  if(i>=0)SEL.opp.splice(i,1);else{if(SEL.m===1)SEL.opp=[u];else{SEL.opp.push(u);if(SEL.opp.length>2)SEL.opp.shift()}}renderList();updSum();return}
+ if(a==='mate'&&u){SEL.opp=SEL.opp.filter(x=>x!==u);SEL.mate=SEL.mate===u?null:u;renderList();updSum();return}
+ if(a==='go'){startInvite();return}
+ if(a==='cancel'){if(D&&D.st==='wait')abort('Ajakan duel dibatalkan');return}
+ if(a==='tab'){tab=v==='op'?'op':'me';vsig='';render();return}
+}
+
+function pickList(){const o=[];try{(bots||[]).forEach(b=>{if(b&&b.uid&&b.uid!==me()&&b.n)o.push({u:b.uid,n:nmx(b.n),lv:b.lv|0})})}catch(e){}return o}
+function need2(){return SEL.m===2?3:1}
+function selCount(){return SEL.opp.length+(SEL.mate?1:0)}
+function ready(){return SEL.m===2?(SEL.opp.length===2&&!!SEL.mate):SEL.opp.length===1}
+
+function render(){
+ const p=E('dlp');if(!p||p.style.display!=='block')return;
+ if(view==='setup'){
+  if(D){view='status';vsig=''}
+  else{const sig='setup|'+SEL.m+SEL.min+SEL.cu+'|'+SEL.am;if(vsig===sig&&p.firstChild&&p.dataset.v==='setup'){return}
+   vsig=sig;p.dataset.v='setup';p.innerHTML=setupHtml();renderList();updSum();return}}
+ if(view==='status'&&!D){if(RES){view='result'}else{closePanel();return}}
+ if(view==='status'){statusRender(p);return}
+ if(view==='result'){resultRender(p)}
+}
+function setupHtml(){
+ const sg=(a,items)=>'<div class="sg">'+items.map(i=>'<button data-a="'+a+'" data-v="'+i[0]+'" class="'+(i[2]?'on':'')+'">'+i[1]+'</button>').join('')+'</div>';
+ return '<div class="dlh"><b>Duel</b><button class="mk" data-a="x">Tutup</button></div>'
+ +'<div class="dlk">Mode</div>'+sg('m',[[1,'1 vs 1',SEL.m===1],[2,'2 vs 2',SEL.m===2]])
+ +'<div class="dlk">Durasi</div>'+sg('mn',MINS.map(m=>[m,m+' mnt',SEL.min===m]))
+ +'<div class="dlk">Taruhan VIP (dipotong saat duel mulai, pemenang membawa semuanya)</div>'
+ +sg('cu',[['g',gemImg(DIAI,15)+' Gems',SEL.cu==='g'],['c',gemImg(CRYI,15)+' Kristal',SEL.cu==='c']])
+ +'<div style="display:flex;gap:6px;align-items:center;margin:2px 0 4px"><input id="dlamt" inputmode="numeric" value="'+SEL.am+'" maxlength="10" style="flex:1;min-width:0"><button class="mk" data-a="am" data-v="0">Tanpa</button><button class="mk" data-a="am" data-v="1000">1rb</button><button class="mk" data-a="am" data-v="10000">10rb</button><button class="mk" data-a="am" data-v="100000">100rb</button></div>'
+ +'<div class="dlk" id="dlbal"></div>'
+ +'<div class="dlk" id="dlhint"></div><div id="dll"></div>'
+ +'<div class="dlft"><div id="dlsum" class="dlk" style="text-align:center"></div><button class="big y" id="dlgo" data-a="go" style="margin:4px auto 2px">Ajak duel</button></div>'}
+function renderList(){
+ const L=E('dll');if(!L||view!=='setup')return;const ps=pickList(),ids=ps.map(x=>x.u);
+ SEL.opp=SEL.opp.filter(x=>ids.indexOf(x)>=0);if(SEL.mate&&ids.indexOf(SEL.mate)<0)SEL.mate=null;
+ let h='';
+ ps.forEach(x=>{const io=SEL.opp.indexOf(x.u)>=0,im=SEL.mate===x.u;
+  h+='<div class="dlrow"><div class="dlnm"><b>'+x.n+'</b><small>Lv'+x.lv+'</small></div>'
+  +(SEL.m===2?'<button class="mk'+(im?' sel':'')+'" data-a="mate" data-u="'+x.u+'">Teman</button>':'')
+  +'<button class="mk'+(io?' sel':'')+'" data-a="opp" data-u="'+x.u+'">Lawan</button></div>'});
+ if(!ps.length)h='<div class="dlk" style="text-align:center;padding:10px">Belum ada pemain lain yang online</div>';
+ const sg=h+'|'+SEL.m;if(L.dataset.s!==sg){L.dataset.s=sg;L.innerHTML=h}
+ const hi=E('dlhint');if(hi)hi.textContent=SEL.m===2?'Pilih 1 teman dan 2 lawan':'Pilih 1 lawan';updSum()}
+function updSum(){
+ const s=E('dlsum'),g=E('dlgo'),bl=E('dlbal');if(!s||!g)return;
+ const am=SEL.am|0,b=bal(SEL.cu);
+ if(bl)bl.innerHTML='Saldo kamu: '+cuIc(SEL.cu)+' '+fN(b)+' '+cuNm(SEL.cu);
+ const ok=ready()&&am<=b;
+ s.innerHTML=(am>0?'VIP '+fN(am)+' '+cuIc(SEL.cu)+' '+cuNm(SEL.cu)+' per pemain':'Tanpa taruhan')+' | '+SEL.min+' menit'+(am>b?'<br><span style="color:#c03a2a">Saldo tidak cukup</span>':'');
+ g.disabled=!ok}
+
+/* ---------- ajak duel (pengirim) ---------- */
+function startInvite(){try{
+ if(D)return;if(!online()){toast('Duel butuh mode online',2200);return}
+ if(!ready())return;const am=SEL.am|0;
+ if(am>bal(SEL.cu)){toast('Saldo '+cuNm(SEL.cu)+' kurang',2000);return}
+ const m=me(),a=SEL.m===2?[m,SEL.mate]:[m],b=SEL.opp.slice(),nm={};nm[m]=nmx(S.name);
+ pickList().forEach(x=>{nm[x.u]=x.n});
+ const id=String(m).slice(0,6)+Date.now().toString(36),ts=nowS();
+ D={id:id,host:m,m:SEL.m,min:SEL.min,cu:SEL.cu,am:am,a:a,b:b,nm:nm,st:'wait',ts:ts,mine:[],last:{},gone:{},miss:{},paid:0,settled:0};
+ label();openPanel('status');
+ dlWrite({id:id,s:'inv',ts:ts,m:D.m,mn:D.min,cu:D.cu,am:am,a:a.join(','),b:b.join(','),nm:nm,c:'[]',f:0}).then(ok=>{if(!ok&&D&&D.id===id)abort('')})
+}catch(e){console.warn(e)}}
+
+/* ---------- ajakan masuk ---------- */
+function detectInvite(){
+ if(D||invCur)return;const n=nowS();
+ for(const u in PL){if(u===me())continue;const d=PL[u]&&PL[u].dl;
+  if(!d||d.s!=='inv'||!d.id||SEEN[d.id])continue;
+  if(Math.abs(n-(+d.ts||0))>60000)continue;
+  const a=String(d.a||'').split(',').filter(Boolean),b=String(d.b||'').split(',').filter(Boolean),m=me();
+  if(a.indexOf(m)<0&&b.indexOf(m)<0)continue;
+  SEEN[d.id]=1;const nm=(d.nm&&typeof d.nm==='object')?d.nm:{};
+  const mn=Math.max(1,Math.min(5,+d.mn|0)),am=Math.max(0,Math.min(1e9,+d.am|0)),cu=d.cu==='c'?'c':'g';
+  invCur={id:d.id,host:u,m:d.m==2?2:1,min:mn,cu:cu,am:am,a:a,b:b,nm:nm,ts:+d.ts||n};
+  showInv();return}}
+function showInv(){const v=invCur,p=E('dli');if(!v||!p)return;
+ const nm=u=>nmx(v.nm[u]||(PL[u]&&PL[u].n)),hn=nm(v.host),m=me();
+ const myTeam=v.a.indexOf(m)>=0?v.a:v.b,opTeam=myTeam===v.a?v.b:v.a;
+ let h='<div style="font-size:16px;text-align:center;margin-bottom:4px"><b>'+hn+'</b> mengajakmu duel '+(v.m===2?'2 vs 2, ':'')+v.min+' menit</div>';
+ if(v.m===2)h+='<div class="dlk" style="text-align:center">Tim kamu: '+myTeam.map(u=>u===m?'kamu':nm(u)).join(' & ')+'<br>Lawan: '+opTeam.map(nm).join(' & ')+'</div>';
+ h+='<div style="text-align:center;margin:6px 0;font-size:15px;background:#e8f0fa;border-radius:12px;padding:5px 10px">'+(v.am>0?'VIP '+fN(v.am)+' '+cuIc(v.cu)+' '+cuNm(v.cu):'Tanpa taruhan')+'</div>';
+ h+='<div style="display:flex;gap:8px;justify-content:center;margin-top:6px"><button class="mk" data-a="in" style="background:#d6402a;box-shadow:0 3px 0 #8a2a1a;font-size:15px;padding:9px 20px">Tolak</button><button class="mk" data-a="iy" style="background:#2a9a4a;box-shadow:0 3px 0 #1a6a2a;font-size:15px;padding:9px 20px">Terima</button></div>';
+ p.innerHTML=h;p.style.display='block';p.style.boxShadow='0 0 0 999px #0006';
+ clearTimeout(invT);invT=setTimeout(()=>{if(invCur&&invCur.id===v.id)declineInv()},INV_TTL)}
+function hideInv(){clearTimeout(invT);invCur=null;const p=E('dli');if(p)p.style.display='none'}
+function declineInv(){const v=invCur;hideInv();if(!v||D)return;
+ dlWrite({id:v.id,s:'no',ts:nowS(),c:'[]',f:0}).then(()=>{setTimeout(()=>{try{if(!D)dlRm()}catch(e){}},8000)})}
+function onInv(e){try{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,v=invCur;if(!v)return;
+ if(a==='in'){declineInv();return}
+ if(a==='iy'){
+  if(D){hideInv();return}
+  if(!online()){toast('Tidak terhubung ke server',2000);return}
+  if(v.am>0&&bal(v.cu)<v.am){toast('Saldo '+cuNm(v.cu)+' kurang, butuh '+fN(v.am),2600);return}
+  hideInv();const ts=nowS();
+  D={id:v.id,host:v.host,m:v.m,min:v.min,cu:v.cu,am:v.am,a:v.a,b:v.b,nm:v.nm,st:'wait',ts:v.ts,myTs:ts,mine:[],last:{},gone:{},miss:{},paid:0,settled:0};
+  label();openPanel('status');
+  dlWrite({id:v.id,s:'ok',ts:ts,c:'[]',f:0}).then(ok=>{if(!ok&&D&&D.id===v.id)abort('')})}
+}catch(er){console.warn(er)}}
+
+/* ---------- sinkron data pemain ---------- */
+function onP(s){try{const u=s.key,v=s.val();if(!v){delete PL[u];delete DS[u];sync();return}
+ const sig=v.dl?JSON.stringify(v.dl):'';const old=DS[u];DS[u]=sig;
+ PL[u]={n:v.n,dl:v.dl||null};if(old===sig)return;sync()}catch(e){console.warn(e)}}
+function onR(s){try{delete PL[s.key];delete DS[s.key];sync()}catch(e){}}
+function sync(){try{detectInvite();if(D)evalD();if(invCur){const h=PL[invCur.host],d=h&&h.dl;if(!d||d.id!==invCur.id||d.s!=='inv'){hideInv();toast('Ajakan duel dibatalkan',1800)}}}catch(e){console.warn('duel',e)}label()}
+const resp=p=>{const d=PL[p]&&PL[p].dl;return d&&d.id===D.id?d:null};
+function others(){return D.a.concat(D.b).filter(p=>p!==D.host)}
+
+function evalD(){
+ const m=me();
+ if(D.st==='wait'){
+  if(D.host!==m){const hd=resp(D.host);if(!hd||hd.s==='no'){abort('Ajakan duel dibatalkan');return}}
+  let ok=0,tm=0;const os=others();
+  for(const p of os){const r=(p===m)?{s:'ok',ts:D.myTs}:resp(p);
+   if(r&&r.s==='no'){abort(nmx(D.nm[p])+' menolak duel');return}
+   if(r&&r.s==='ok'){ok++;tm=Math.max(tm,+r.ts||0)}}
+  if(ok===os.length&&os.length>0)begin(tm);
+  return}
+ if(D.st==='count'){
+  const hd=resp(D.host);if(D.host!==m&&(!hd||hd.s==='no')){abort('Duel dibatalkan');return}
+  for(const p of others()){if(p===m)continue;const r=resp(p);if(!r||r.s==='no'){abort('Duel dibatalkan');return}}
+  return}
+ if(D.st==='run'||D.st==='fin'){
+  D.a.concat(D.b).forEach(p=>{if(p===m)return;const r=resp(p);if(r){D.last[p]={c:typeof r.c==='string'?r.c:'[]',f:r.f?1:0};delete D.miss[p];D.gone[p]=0}})
+  return}
+}
+function begin(tm){
+ if(D.paid)return;
+ if(D.am>0&&bal(D.cu)<D.am){dlWrite({id:D.id,s:'no',ts:nowS(),c:'[]',f:0});const msg='Saldo '+cuNm(D.cu)+' tidak cukup, duel dibatalkan';D.paid=0;abort(msg);return}
+ if(D.am>0){addBal(D.cu,-D.am);D.paid=1;try{save();ui()}catch(e){}}
+ D.st='count';D.start=tm+5000;D.end=D.start+D.min*60000;
+ if(D.host===me())dlUpd({s:'go'});
+ try{sfx&&sfx('catch')}catch(e){}
+ toast('Duel diterima! Bersiap...',1800)}
+
+/* ---------- loop waktu ---------- */
+function tick(){try{
+ if(!D){if(E('dlcd')&&E('dlcd').style.display!=='none')label();return}
+ const n=nowS();
+ if(D.st==='wait'){if(n>D.ts+INV_TTL+(D.host===me()?0:4000)){abort(D.host===me()?'Ajakan duel tidak dijawab':'Ajakan kedaluwarsa');return}}
+ else if(D.st==='count'){if(n>=D.start){D.st='run';try{toast('Duel dimulai! Tangkap ikan sebanyak mungkin',2200)}catch(e){}}}
+ if(D&&D.st==='run'){
+  if(n>=D.end){endRun()}
+  else{goneCheck(n);if(D&&D.st==='run'&&teamGone(D.a.indexOf(me())>=0?D.b:D.a)){endRun(true)}}}
+ if(D&&D.st==='fin'){goneCheck(n);tryResolve(n)}
+ label()}catch(e){console.warn('duel tick',e)}}
+function goneCheck(n){const m=me();D.a.concat(D.b).forEach(p=>{if(p===m)return;const r=resp(p);
+ if(r){delete D.miss[p];D.gone[p]=0;return}
+ if(!D.miss[p])D.miss[p]=n;else if(n-D.miss[p]>GRACE)D.gone[p]=1})}
+function teamGone(t){return t.every(p=>D.gone[p]&&!(D.last[p]&&D.last[p].f))}
+function endRun(force){if(!D||D.st!=='run')return;D.st='fin';D.finAt=nowS();D.mine=D.mine.slice(0,300);
+ dlUpd({c:JSON.stringify(D.mine),f:1});if(force){tryResolve(D.finAt+FIN_WAIT+1)}}
+function tryResolve(n){
+ const m=me();let all=true;
+ D.a.concat(D.b).forEach(p=>{if(p===m)return;const l=D.last[p];if(!(l&&l.f)&&!D.gone[p])all=false});
+ if(all||n>D.finAt+FIN_WAIT)resolve()}
+
+/* ---------- hitung hasil ---------- */
+function parse(str,owner){const o=[];try{const a=JSON.parse(str);if(!Array.isArray(a))return o;
+ for(let k=0;k<a.length&&o.length<300;k++){const x=a[k];if(!Array.isArray(x))continue;const i=x[0]|0,w=+x[1],v=+x[2],f=FISH[i];
+  if(!f||!(w>=1)||!(v>=1))continue;
+  const vv=Math.max(1,Math.min(Math.round(v),Math.round((+f[5]||1)*1.45)+1)),r=f[0];
+  o.push({n:f[1],r:r,w:Math.round(Math.min(w,+f[4]||w)),v:vv,s:Math.round(vv*(DW[r]||1)),o:owner})}}catch(e){}return o}
+function listOf(p){
+ if(p===me())return D.mine.map(x=>{const f=FISH[x[0]];if(!f)return null;const vv=Math.max(1,x[2]|0),r=f[0];return{n:f[1],r:r,w:x[1],v:vv,s:Math.round(vv*(DW[r]||1)),o:p}}).filter(Boolean);
+ if(D.gone[p]&&!(D.last[p]&&D.last[p].f))return [];
+ const l=D.last[p];return l?parse(l.c,p):[]}
+function teamData(ids){let list=[],tot=0;ids.forEach(p=>{const l=listOf(p);list=list.concat(l)});list.forEach(x=>tot+=x.s);return{list:list,tot:tot,n:list.length}}
+function resolve(){
+ const d=D;if(!d||d.st==='done')return;d.st='done';
+ const ta=teamData(d.a),tb=teamData(d.b),m=me(),inA=d.a.indexOf(m)>=0;
+ let win='d';
+ const gA=teamGone(d.a),gB=teamGone(d.b);
+ if(gA&&!gB)win='b';else if(gB&&!gA)win='a';else if(ta.tot>tb.tot)win='a';else if(tb.tot>ta.tot)win='b';
+ const my=inA?'a':'b';let pay=0;
+ if(d.am>0&&d.paid&&!d.settled){
+  if(win==='d')pay=d.am;else if(win===my)pay=d.am*2;
+  if(pay>0)addBal(d.cu,pay);d.settled=1;try{save();ui()}catch(e){}}
+ RES={d:d,ta:ta,tb:tb,win:win,my:my,pay:pay,res:win==='d'?'d':(win===my?'w':'l')};
+ D=null;tab='me';
+ try{if(RES.res==='w'){banner('Kamu menang duel!')}}catch(e){}
+ setTimeout(()=>{try{if(!D)dlRm()}catch(e){}},15000);
+ label();openPanel('result')}
+
+function abort(msg){
+ const d=D;D=null;
+ if(d&&d.paid&&!d.settled){addBal(d.cu,d.am);d.settled=1;try{save();ui()}catch(e){}}
+ dlRm();hideInv();if(view==='status'||view==='setup'||view==='')closePanel();
+ if(msg)toast(msg,3000);label()}
+
+/* ---------- tampilan status / hasil ---------- */
+function rowH(x,tag){return '<div class="dlrow"><span class="dlfi">'+fim(x.n,26)+'</span><div class="dlnm"><b>'+x.n.replace(/^Ikan /,'')+'</b><small>'+(tag&&x.o?tag(x.o)+' | ':'')+fmtW(x.w)+'</small></div>'
+ +'<span class="dlrt" style="background:'+RAR[x.r][1]+'">'+RAR[x.r][0]+'</span>'
+ +'<div class="dlpr">'+gemImg(DIAI,12)+fN(x.v)+'<small>x'+DW[x.r]+'</small></div><b class="dlsc">'+fN(x.s)+'</b></div>'}
+function listH(t,tag){
+ let h='<div class="dlrow dlhd"><span style="width:26px"></span><div class="dlnm">Ikan</div><span class="dlrt" style="background:none;color:#6a5a3a">Rate</span><div class="dlpr">Harga</div><b class="dlsc">Nilai</b></div>';
+ if(!t.list.length)return h+'<div class="dlk" style="text-align:center;padding:10px">Belum ada ikan yang ditangkap</div>';
+ return h+t.list.map(x=>rowH(x,tag)).join('')}
+function score(ta,tb,mineA,hl){
+ const box=(ids,t,mine,lead)=>'<div class="dlsb'+(mine?' me':'')+(lead?' ld':'')+'"><div class="dlsn">'+names(ids)+'</div><div class="dlst">'+fN(t.tot)+'</div><small>'+t.n+' ikan</small></div>';
+ const l=ta.tot>tb.tot?'a':tb.tot>ta.tot?'b':'';
+ return '<div style="display:flex;gap:8px;align-items:stretch">'+box(mineA?D0.a:D0.b,mineA?ta:tb,1,l===(mineA?'a':'b'))+'<div class="dlvs">VS</div>'+box(mineA?D0.b:D0.a,mineA?tb:ta,0,l===(mineA?'b':'a'))+'</div>'}
+let D0=null;
+const LEG='<div class="dlk" style="margin-top:6px">Nilai = Harga x bobot kelangkaan. Common x1 | Rare x1,5 | Legend x2 | Mythic x3 | Mitos x4 | Special x2. Pemenang = total nilai tertinggi.</div>';
+function statusRender(p){
+ if(!D)return;D0=D;const m=me(),mineA=D.a.indexOf(m)>=0;
+ const ta=D.st==='wait'?{list:[],tot:0,n:0}:teamData(D.a),tb=D.st==='wait'?{list:[],tot:0,n:0}:teamData(D.b);
+ const n=nowS();let state='';
+ if(D.st==='wait'){state='Menunggu jawaban: '+others().map(u=>{const r=u===m?{s:'ok'}:resp(u);return nmx(D.nm[u])+' ('+(r&&r.s==='ok'?'menerima':r&&r.s==='no'?'menolak':'belum')+')'}).join(', ')}
+ else if(D.st==='count')state='Mulai dalam '+Math.max(0,Math.ceil((D.start-n)/1000))+' detik';
+ else if(D.st==='run')state='Sisa waktu <b>'+fT(D.end-n)+'</b>';
+ else state='Waktu habis, menghitung hasil...';
+ const vis=tab==='op'?(mineA?tb:ta):(mineA?ta:tb),mineT=D.m===2?(u=>u===m?'kamu':nmx(D.nm[u])):null;
+ const sig=[D.st,ta.n,tb.n,ta.tot,tb.tot,tab,Object.keys(D.gone).filter(k=>D.gone[k]).join(),D.st==='wait'?state:''].join('|');
+ const tmr=p.querySelector('#dlstate');
+ if(vsig===sig&&tmr&&p.dataset.v==='status'){tmr.innerHTML=state;return}
+ vsig=sig;p.dataset.v='status';
+ const dispT=tab==='op'?(mineA?D.b:D.a):(mineA?D.a:D.b);
+ p.innerHTML='<div class="dlh"><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+vsText()+'</b><button class="mk" data-a="x">Tutup</button></div>'
+ +'<div class="dlk">Duel '+D.min+' menit | '+(D.am>0?'VIP '+fN(D.am)+' '+cuIc(D.cu)+' '+cuNm(D.cu)+' per pemain':'Tanpa taruhan')+'</div>'
+ +'<div class="dlk" id="dlstate" style="font-size:13px;color:#3b2a1a">'+state+'</div>'
+ +(D.st==='wait'?'':score(ta,tb,mineA)
+ +'<div class="sg" style="margin-top:8px"><button data-a="tab" data-v="me" class="'+(tab==='me'?'on':'')+'">Ikan tim kamu</button><button data-a="tab" data-v="op" class="'+(tab==='op'?'on':'')+'">Ikan lawan</button></div>'
+ +'<div class="dllist">'+listH(vis,mineT)+'</div>'+LEG)
+ +(D.st==='wait'&&D.host===m?'<button class="big y" data-a="cancel" style="margin:8px auto 2px">Batalkan ajakan</button>':'')}
+function resultRender(p){
+ const R=RES;if(!R){closePanel();return}const d=R.d;D0=d;const m=me(),mineA=R.my==='a';
+ const sig='res|'+tab+'|'+R.res;if(vsig===sig&&p.dataset.v==='result')return;vsig=sig;p.dataset.v='result';
+ const ta=R.ta,tb=R.tb,vis=tab==='op'?(mineA?tb:ta):(mineA?ta:tb),mineT=d.m===2?(u=>u===m?'kamu':nmx(d.nm[u])):null;
+ const col=R.res==='w'?'#2a9a4a':R.res==='l'?'#d6402a':'#6a5a3a',tt=R.res==='w'?'KAMU MENANG!':R.res==='l'?'KAMU KALAH':'SERI';
+ let pay='';
+ if(d.am>0){pay=R.res==='w'?'Hadiah +'+fN(R.pay)+' '+cuIc(d.cu)+' '+cuNm(d.cu):R.res==='d'?'Taruhan dikembalikan '+fN(R.pay)+' '+cuIc(d.cu):'Taruhan '+fN(d.am)+' '+cuIc(d.cu)+' hilang'}
+ p.innerHTML='<div class="dlh"><b style="color:'+col+';font-size:20px">'+tt+'</b><button class="mk" data-a="rc">Tutup</button></div>'
+ +'<div class="dlk" style="font-size:13px;color:#3b2a1a">'+names(d.a)+' vs '+names(d.b)+' | '+d.min+' menit'+(pay?'<br>'+pay:'')+'</div>'
+ +score(ta,tb,mineA)
+ +'<div class="sg" style="margin-top:8px"><button data-a="tab" data-v="me" class="'+(tab==='me'?'on':'')+'">Ikan tim kamu</button><button data-a="tab" data-v="op" class="'+(tab==='op'?'on':'')+'">Ikan lawan</button></div>'
+ +'<div class="dllist">'+listH(vis,mineT)+'</div>'+LEG}
+
+/* ---------- tangkapan ikan selama duel ---------- */
+function onCatch(f){
+ if(!D||D.st!=='run'||!f||f.t)return;if(nowS()>=D.end)return;
+ const i=FIX[f.n];if(i==null)return;
+ D.mine.push([i,Math.round(f.w),Math.max(1,curV(f)|0)]);
+ if(D.mine.length>300)D.mine.length=300;
+ dlUpd({c:JSON.stringify(D.mine)});
+ try{vsig=''}catch(e){}}
+
+/* ---------- pasang ke sistem yang sudah ada (dibungkus, tidak mengubah perilaku lama) ---------- */
+function attach(){try{if(typeof db==='undefined'||!db||!me())return;const pr=db.ref('players');
+ try{pr.off('child_added',onP);pr.off('child_changed',onP);pr.off('child_removed',onR)}catch(e){}
+ pr.on('child_added',onP);pr.on('child_changed',onP);pr.on('child_removed',onR)}catch(e){console.warn('duel attach',e)}}
+function reset(){try{const d=D;D=null;if(d&&d.paid&&!d.settled){d.settled=1}hideInv();closePanel();RES=null;PL={};DS={};label();E('dlcd')&&(E('dlcd').style.display='none')}catch(e){}}
+try{
+ const _g=window.got;if(typeof _g==='function'){window.got=function(f){const r=_g.apply(this,arguments);try{onCatch(f)}catch(e){console.warn(e)}return r}}
+ const _nj=window.netJoin;if(typeof _nj==='function'){window.netJoin=function(){const r=_nj.apply(this,arguments);try{attach()}catch(e){}return r}}
+ const _nl=window.netLeave;if(typeof _nl==='function'){window.netLeave=function(){try{if(D&&D.st==='wait')dlRm()}catch(e){}try{reset()}catch(e){}return _nl.apply(this,arguments)}}
+}catch(e){console.warn('duel wrap',e)}
+build();setInterval(tick,250);
+window.__duelDbg={get D(){return D},get PL(){return PL},get RES(){return RES},attach:attach,sync:sync,onP:onP};
 })();
 </script>
 </body></html>
